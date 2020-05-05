@@ -43,7 +43,7 @@
           margin-left: auto;
           margin-right: auto;">
         Anda Belum Login</div>
-    
+     <x-navbar />
       <a href="logout.html" class="list-group-item list-group-item-action">Beranda</a>
       <a href="logout.html" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
       <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
