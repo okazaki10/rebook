@@ -13,8 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomePageController@index');
 Route::resource('daftar','DaftarController');
+
+Route::middleware('penjual')->group(function () {
+Route::resource('penjual/','PenjualPageController');
+Route::resource('penjual/penjualan/','DetailBukuController');
+Route::resource('penjual/listbuku','ListBukuController');
+});
+Route::middleware('pembeli')->group(function () {
+    Route::resource('pembeli/','PembeliPageController');
+    Route::resource('pembeli/pembelian','PembelianController');
+    Route::resource('pembeli/keranjang','KeranjangBelanjaController');
+});
+Route::get('logout/','DaftarController@logout');
 Route::post('validasi','DaftarController@validasi');

@@ -39,10 +39,10 @@
             padding-top: 60px;
             text-align: center;
 
-            "><img src="https://st2.depositphotos.com/1104517/11965/v/950/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
+            "><img src="{{asset($user->foto_profil)}}" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
             margin-left: auto;
             margin-right: auto;">
-          Anda Belum Login</div>
+          {{ $user->nama_lengkap}}</div>
         <a href="{{url('/')}}" class="list-group-item list-group-item-action">Beranda</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
@@ -74,8 +74,8 @@
                   <button class="btn btn-success mr-sm-2">Login</button>
                   
                 </div>
-            <a href="daftar.html">
-              <button class="btn btn-primary mr-sm-2" type="button">Daftar</button>
+            <a href="{{action('DaftarController@logout')}}">
+              <button class="btn btn-primary mr-sm-2" type="button">Logout</button>
             </a>
 
           </ul>
@@ -84,7 +84,7 @@
       
       <div id="containerfluid" class="container-fluid">
  
-        <h2 class="mt-4">Daftar</h2>
+        <h2 class="mt-4">Tambahkan Buku</h2>
 		@if ($errors->any())
 		<div class="alert alert-danger">
 			<ul>
@@ -94,70 +94,29 @@
 			</ul>
 		</div><br />
 		@endif
-		@if (\Session::has('failed'))
-		<div class="alert alert-danger">
-			<p>{{ \Session::get('failed') }}</p>
+		@if (\Session::has('success'))
+		<div class="alert alert-success">
+			<p>{{ \Session::get('success') }}</p>
 		</div><br />
 		@endif
-		<form enctype="multipart/form-data" method="post" action="{{action('DaftarController@store')}}">
+		<form method="POST" enctype="multipart/form-data" action="{{action('ListBukuController@update',$id)}}">
 			{{csrf_field()}}
-    <div class="form-group">
-      <label>email</label>
-      <input type="text" name="email" class="form-control">
+            <input name="_method" type="hidden" value="PATCH">
+      <div class="form-group">
+    <label>judul buku</label>
+    <select name="id_buku" class="form-control">
+    @foreach($detail_bukus as $detail_buku)
+    <option value="{{$detail_buku['id']}}" {{$list_buku->id_buku == $detail_buku['id'] ? 'selected' : ''}}>{{$detail_buku['judul']}}</option>
+    @endforeach
+    </select>
     </div>
     <div class="form-group">
-      <label>password</label>
-      <input type="password" name="password" class="form-control">
+      <label>stok</label>
+      <input type="text" name="stok" value="{{$list_buku->stok}}" class="form-control">
     </div>
-    <div class="form-group">
-      <label>konfirmasi password</label>
-      <input type="password" name="konfirmasi_password" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Nama Lengkap</label>
-      <input type="text" name="nama_lengkap" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Alamat</label>
-      <input type="text" name="alamat" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Tanggal Lahir</label>
-      <input type="date" name="tanggal_lahir" class="form-control">
-    </div>
-	<div class="form-group">
-      <label>no hp</label>
-      <input type="text" name="no_hp" class="form-control">
-    </div>
-	<div class="form-group">
-      <label>saldo</label>
-      <input type="text" name="saldo" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>status</label>
-      <select name="status" class="form-control">
-        <option value="1">pembeli</option>
-		<option value="2">penjual</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>foto profil</label>
-      <input type="file" name="foto_profil" class="form-control">
-    </div>
-	<!--
-    <div class="form-group">
-      <label>Foto Profil</label>
-      <p><img src="foto_profil/none.jpg" height="100" width="100"></p>
-      <div class="custom-file">
-      <input type="file" class="custom-file-input" id="customFile">
-      <label class="custom-file-label" for="customFile">Choose file</label>
-      </div>
-    </div>
-	!-->
-
-    <button type="submit" class="btn btn-primary">Daftar</button>
+    
+    <button type="submit" class="btn btn-primary">tambahkan buku</button>
   </form>
-
     </div>
 
 
@@ -187,3 +146,5 @@
   </body>
 
   </html>
+  <div>
+

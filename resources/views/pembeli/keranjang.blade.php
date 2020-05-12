@@ -39,12 +39,14 @@
             padding-top: 60px;
             text-align: center;
 
-            "><img src="https://st2.depositphotos.com/1104517/11965/v/950/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
+            "><img src="{{asset($user->foto_profil)}}" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
             margin-left: auto;
             margin-right: auto;">
-          Anda Belum Login</div>
+          {{ $user->nama_lengkap }}
+          </div>
+          saldo {{$user->saldo}}
         <a href="{{url('/')}}" class="list-group-item list-group-item-action">Beranda</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
+        <a href="{{action('KeranjangBelanjaController@index')}}" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Perencanaan Wilayah Kota</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Interior</a>
@@ -74,8 +76,8 @@
                   <button class="btn btn-success mr-sm-2">Login</button>
                   
                 </div>
-            <a href="daftar.html">
-              <button class="btn btn-primary mr-sm-2" type="button">Daftar</button>
+            <a href="{{action('DaftarController@logout')}}">
+              <button class="btn btn-primary mr-sm-2" type="button">Logout</button>
             </a>
 
           </ul>
@@ -84,7 +86,7 @@
       
       <div id="containerfluid" class="container-fluid">
  
-        <h2 class="mt-4">Daftar</h2>
+        <h2 class="mt-4">Tambahkan Buku</h2>
 		@if ($errors->any())
 		<div class="alert alert-danger">
 			<ul>
@@ -94,70 +96,46 @@
 			</ul>
 		</div><br />
 		@endif
-		@if (\Session::has('failed'))
-		<div class="alert alert-danger">
-			<p>{{ \Session::get('failed') }}</p>
+		@if (\Session::has('success'))
+		<div class="alert alert-success">
+			<p>{{ \Session::get('success') }}</p>
 		</div><br />
 		@endif
-		<form enctype="multipart/form-data" method="post" action="{{action('DaftarController@store')}}">
-			{{csrf_field()}}
-    <div class="form-group">
-      <label>email</label>
-      <input type="text" name="email" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>password</label>
-      <input type="password" name="password" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>konfirmasi password</label>
-      <input type="password" name="konfirmasi_password" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Nama Lengkap</label>
-      <input type="text" name="nama_lengkap" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Alamat</label>
-      <input type="text" name="alamat" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Tanggal Lahir</label>
-      <input type="date" name="tanggal_lahir" class="form-control">
-    </div>
-	<div class="form-group">
-      <label>no hp</label>
-      <input type="text" name="no_hp" class="form-control">
-    </div>
-	<div class="form-group">
-      <label>saldo</label>
-      <input type="text" name="saldo" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>status</label>
-      <select name="status" class="form-control">
-        <option value="1">pembeli</option>
-		<option value="2">penjual</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>foto profil</label>
-      <input type="file" name="foto_profil" class="form-control">
-    </div>
-	<!--
-    <div class="form-group">
-      <label>Foto Profil</label>
-      <p><img src="foto_profil/none.jpg" height="100" width="100"></p>
-      <div class="custom-file">
-      <input type="file" class="custom-file-input" id="customFile">
-      <label class="custom-file-label" for="customFile">Choose file</label>
-      </div>
-    </div>
-	!-->
+		<table class="table table-striped">
+<thead>
+<tr>
+<th>Gambar</th>
+<th>Judul Buku</th>
+<th>Jumlah</th>
+<th>Harga</th>
 
-    <button type="submit" class="btn btn-primary">Daftar</button>
-  </form>
+<th colspan="3" align="center">Action</th>
+</tr>
+</thead>
+<tbody>
 
+@foreach($keranjangs as $keranjang)
+<tr>
+<td><img src="{{asset($keranjang['gambar'])}}" height=100 width=100></td>
+<td>{{$keranjang['judul']}}</td>
+<td>{{$keranjang['jumlah']}}</td>
+<td>{{$keranjang['harga']}}</td>
+<td>
+<form action="{{action('KeranjangBelanjaController@destroy',
+$keranjang['id'])}}" method="post">
+{{csrf_field()}}
+<input name="_method" type="hidden" value="DELETE">
+<button class="btn btn-danger" type="submit">Hapus</button>
+</form>
+</td>
+@endforeach
+</table>
+@if($total>0)
+total {{$total}}
+<form action="{{action('KeranjangBelanjaController@store')}}" method="post">
+{{csrf_field()}}
+<button class="btn btn-success" type="submit">Beli</button>
+@endif
     </div>
 
 
@@ -165,6 +143,7 @@
 
 
   </div>
+  
   <!-- /#page-content-wrapper -->
 
   </div>
@@ -187,3 +166,5 @@
   </body>
 
   </html>
+  <div>
+

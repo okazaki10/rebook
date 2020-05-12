@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Daftar;
 use Illuminate\Http\Request;
-
+use Session;
+use App\Helper\Helper;
 class DaftarController extends Controller
 {
     /**
@@ -36,31 +38,43 @@ class DaftarController extends Controller
     public function store(Request $request)
     {
         $daftar = $this->validate(request(), [
-            'password' => 'required',
-            'email' => 'required',
+            'password' => 'required|min:4',
+            'konfirmasi_password' => 'required',
+            'email' => 'required|min:8',
             'nama_lengkap' => 'required',
             'alamat' => 'required',
             'tanggal_lahir' => 'required',
-            'no_hp' => 'required',
-            'saldo' => 'required',
+            'no_hp' => 'required|numeric',
+            'saldo' => 'required|numeric',
             'status' => 'required',
-            'foto_profil' => 'required'
+            'foto_profil' => 'nullable'
         ]);
+        if($daftar['password'] == $daftar['konfirmasi_password']){
+        if($request->hasFile('foto_profil')){
+        $path = $request->file('foto_profil')->store('public/profil');
+        $path2 = str_replace("public","storage",$path);
+        $daftar['foto_profil'] = $path2;
+        }else{
+        $daftar['foto_profil'] = "storage/no_profile.jpg";
+        }
         Daftar::create($daftar);
         return redirect('/');
+    }else{
+        return redirect('daftar/create')->with('failed','konfirmasi password tidak sama');
+    }
     }
 
     public function validasi(Request $request)
     {
-        $daftar = Daftar::where('email',$request->email)->where('password',$request->password);
-        $jumlah = $daftar->count();
-        if ($jumlah > 0){
-        $status = $daftar->get();
-            if ($status[0]['status'] == 1){
-            return redirect('beli');
-            }else if($status[0]['status'] == 2){
-            return redirect('jual');
-            }
+        $auth = Helper::auth($request->email,$request->password);
+        if ($auth != null){
+            Session::put('email',$auth->email);
+            Session::put('password',$auth->password);
+            if ($auth->status == 1){
+                return redirect('pembeli/');
+                }else if($auth->status == 2){
+                return redirect('penjual/');
+                }
         }else{
             return redirect('/');
         }
@@ -109,5 +123,10 @@ class DaftarController extends Controller
     public function destroy(Daftar $daftar)
     {
         //
+    }
+    public function logout()
+    {
+        Session::flush();
+        return redirect('/');
     }
 }
