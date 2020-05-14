@@ -4,6 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Status_konfirmasi;
 use Illuminate\Http\Request;
+use Session;
+use App\Helper\Helper;
+use DB;
+use App\Detail_buku;
+use App\List_buku;
+use App\Keranjang_belanja;
+use App\Daftar;
+use App\Transaction_log;
 
 class StatusKonfirmasiController extends Controller
 {
@@ -14,7 +22,15 @@ class StatusKonfirmasiController extends Controller
      */
     public function index()
     {
-        //
+        $user = Helper::auth(Session::get('email'),Session::get('password'));
+        $data = DB::table('status_konfirmasi')->join('user','user.id','=','status_konfirmasi.id_user')
+        ->select('status_konfirmasi.id','user.nama_lengkap','user.alamat','user.no_hp','status_konfirmasi.tanggal_mulai','status_konfirmasi.tanggal_selesai','status_konfirmasi.status')
+        ->where('status_konfirmasi.id_penjual',$user->id)
+        ->get(); 
+        $konfirmasis = json_decode($data, true);
+
+      
+        return view('penjual.konfirmasi',compact('user','konfirmasis'));
     }
 
     /**
@@ -55,9 +71,18 @@ class StatusKonfirmasiController extends Controller
      * @param  \App\Status_konfirmasi  $status_konfirmasi
      * @return \Illuminate\Http\Response
      */
-    public function edit(Status_konfirmasi $status_konfirmasi)
+    public function edit($id)
     {
-        //
+        $user = Helper::auth(Session::get('email'),Session::get('password'));
+        $data = DB::table('status_konfirmasi')->join('user','user.id','=','status_konfirmasi.id_user')
+        ->join('keranjang_belanja','keranjang_belanja.id_status','=','status_konfirmasi.id')
+        ->join('list_buku','list_buku.id','=','keranjang_belanja.id_list_buku')
+        ->join('detail_buku','list_buku.id_buku','=','detail_buku.id')
+        ->select('keranjang_belanja.id','keranjang_belanja.jumlah','keranjang_belanja.harga','detail_buku.judul','detail_buku.gambar','user.nama_lengkap','user.alamat','user.no_hp','status_konfirmasi.tanggal_mulai','status_konfirmasi.tanggal_selesai')
+        ->where('status_konfirmasi.id',$id)
+        ->get();   
+        $konfirmasis = json_decode($data, true);
+        return view('penjual.konfirmasipage',compact('konfirmasis','id','user'));
     }
 
     /**
@@ -67,9 +92,31 @@ class StatusKonfirmasiController extends Controller
      * @param  \App\Status_konfirmasi  $status_konfirmasi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Status_konfirmasi $status_konfirmasi)
+    public function update(Request $request, $id)
     {
-        //
+        $konfirmasi = Status_konfirmasi::find($id);
+        $this->validate(request(), [
+            'status' => 'required'
+            ]);
+        $konfirmasi->tanggal_selesai = date('Y-m-d');    
+        $konfirmasi->status = $request->get('status');
+        $konfirmasi->save();
+        if($request->get('status') == '1'){
+            $transaksi = new Transaction_log;
+            $transaksi->id_status_konfirmasi = $konfirmasi->id;
+            $transaksi->tanggal_selesai = date('Y-m-d');
+            $transaksi->save();
+        }else if($request->get('status') == '3'){
+            $keranjangs = Keranjang_belanja::where('id_status',$konfirmasi->id)->get();
+            $total = 0;
+            foreach($keranjangs as $keranjang){
+                $total = $total + $keranjang['harga'];
+            }
+            $pembeli = Daftar::find($konfirmasi->id_user);
+            $pembeli->saldo = $pembeli->saldo + $total;
+            $pembeli->save();
+        }
+        return redirect('penjual.konfirmasi')->with('success','Data has been updated');
     }
 
     /**

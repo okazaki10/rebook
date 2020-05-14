@@ -42,9 +42,11 @@
             "><img src="{{asset($user->foto_profil)}}" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
             margin-left: auto;
             margin-right: auto;">
-          {{ $user->nama_lengkap }}</div>
+          {{ $user->nama_lengkap }}
+          </div>
+          saldo {{$user->saldo}}
         <a href="{{url('/')}}" class="list-group-item list-group-item-action">Beranda</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
+        <a href="{{action('KeranjangBelanjaController@index')}}" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Perencanaan Wilayah Kota</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Interior</a>
@@ -83,24 +85,55 @@
       </nav>
       
       <div id="containerfluid" class="container-fluid">
-      <h2 class="mt-4">Penjual</h2>
-      @if (\Session::has('success'))
+ 
+        <h2 class="mt-4">Tambahkan Buku</h2>
+		@if ($errors->any())
+		<div class="alert alert-danger">
+			<ul>
+				@foreach ($errors->all() as $error)
+				<li>{{ $error }}</li>
+				@endforeach
+			</ul>
+		</div><br />
+		@endif
+		@if (\Session::has('success'))
 		<div class="alert alert-success">
 			<p>{{ \Session::get('success') }}</p>
 		</div><br />
 		@endif
-      <a href="{{action('DetailBukuController@index')}}">
-            <button class="btn btn-primary mr-sm-2" type="button">tambahkan buku</button>
-        </a>
-        <a href="{{action('ListBukuController@create')}}">
-            <button class="btn btn-primary mr-sm-2" type="button">jual buku</button>
-        </a>
-        <a href="{{action('ListBukuController@index')}}">
-            <button class="btn btn-primary mr-sm-2" type="button">lihat buku yang dijual</button>
-        </a>
-        <a href="{{action('StatusKonfirmasiController@index')}}">
-            <button class="btn btn-primary mr-sm-2" type="button">konfirmasi</button>
-        </a>
+        nama {{$konfirmasis[0]['nama_lengkap']}}
+alamat {{$konfirmasis[0]['alamat']}}
+nomor hp{{$konfirmasis[0]['no_hp']}}
+tanggal mulai {{$konfirmasis[0]['tanggal_mulai']}}
+
+
+		<table class="table table-striped">
+<thead>
+<tr>
+<th>Gambar</th>
+<th>Judul Buku</th>
+<th>Jumlah</th>
+<th>Harga</th>
+
+</tr>
+</thead>
+<tbody>
+
+@foreach($konfirmasis as $konfirmasi)
+<tr>
+<td><img src="{{asset($konfirmasi['gambar'])}}" height=100 width=100></td>
+<td>{{$konfirmasi['judul']}}</td>
+<td>{{$konfirmasi['jumlah']}}</td>
+<td>{{$konfirmasi['harga']}}</td>
+@endforeach
+</table>
+<form method="POST" enctype="multipart/form-data" action="{{action('StatusKonfirmasiController@update',$id)}}">
+			{{csrf_field()}}
+            <input name="_method" type="hidden" value="PATCH">
+    
+    <button type="submit" name="status" value="1" class="btn btn-primary">kirim</button>
+    <button type="submit" name="status" value="3" class="btn btn-primary">batal</button>
+  </form>
     </div>
 
 
@@ -108,6 +141,7 @@
 
 
   </div>
+  
   <!-- /#page-content-wrapper -->
 
   </div>
@@ -130,3 +164,5 @@
   </body>
 
   </html>
+  <div>
+

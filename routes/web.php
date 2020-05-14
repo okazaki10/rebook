@@ -20,6 +20,7 @@ Route::middleware('penjual')->group(function () {
 Route::resource('penjual/','PenjualPageController');
 Route::resource('penjual/penjualan/','DetailBukuController');
 Route::resource('penjual/listbuku','ListBukuController');
+Route::resource('penjual/konfirmasi','StatusKonfirmasiController');
 });
 Route::middleware('pembeli')->group(function () {
     Route::resource('pembeli/','PembeliPageController');
