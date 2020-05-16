@@ -38,10 +38,23 @@ class ChatController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Helper::auth(Session::get('email'), Session::get('password'));
         $chat = new Chat;
-        
+        $chat->id_user = $user->id;
+        $chat->id_penjual = $request->get('id_penjual');
+        $chat->chat = $request->get('chat');
+        $chat->tanggal = date('Y-m-d');
+        $chat->save();
     }
-
+    public function kirim($id_penjual,$chats){
+        $user = Helper::auth(Session::get('email'), Session::get('password'));
+        $chat = new Chat;
+        $chat->id_user = $user->id;
+        $chat->id_penjual = $id_penjual;
+        $chat->chat = $chats;
+        $chat->tanggal = date('Y-m-d');
+        $chat->save();
+    }
     /**
      * Display the specified resource.
      *

@@ -32,7 +32,8 @@ Route::middleware('pembeli')->group(function () {
     Route::resource('pembeli/keranjang','KeranjangBelanjaController');
     Route::resource('pembeli/isisaldo','TransaksiSaldoController');
     Route::resource('pembeli/chat','ChatController');
-    Route::get('pembeli/chat/handlechat/{id}','ChatController@handle');
+    Route::get('pembeli/chat/handlechat/{id}/','ChatController@handle');
+    Route::get('pembeli/chat/handlechat/kirim/{id_penjual}/{chats}/','ChatController@kirim');
 });
 
 Route::get('logout/','DaftarController@logout');

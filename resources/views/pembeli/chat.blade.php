@@ -104,10 +104,9 @@
   
 	<div id="handle">
 	</div>
-{{$id_penjual}}
-{{csrf_field()}}
-    <input type="text" name="message" id="message">
-    <button type="submit" name="send" id="send" class="btn btn-primary" onclick="kirim()">kirim</button>
+
+    <input type="text" name="chat" id="chat">
+    <button type="button" name="send" id="send" class="btn btn-primary" onclick="kirim()">kirim</button>
 
 
     </div>
@@ -122,7 +121,7 @@
          function getMessage() {
             $.ajax({
                type:'GET',
-               url:'handlechat/{{$id_penjual}}',
+               url:'handlechat/{{$id_penjual}}/',
                data:'',
                success:function(data) {
                   $("#handle").html(data);
@@ -130,15 +129,15 @@
             });
          }
          function kirim(){
-            var message = $('#message').val();
+            var chat = $('#chat').val();
             var csrf_token = '{{csrf_token()}}';
             var id_penjual = '{{$id_penjual}}';
             $.ajax({
-               type:'POST',
-               url:"{{action('ChatController@store')}}",
-               data:'_token='+csrf_token+'&message='+message+'&id_penjual='+id_penjual,
+               type:'GET',
+               url:"handlechat/kirim/"+id_penjual+"/"+chat+"/",
+               data:'',
                success:function(data) {
-                  
+                  getMessage();
                }
             });
          }
