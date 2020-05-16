@@ -45,6 +45,7 @@
 .jumbotron {
   padding: 0;
   position: relative;
+  margin-bottom: 0;
 }
 
 .jumbotron .main-bg {
@@ -80,5 +81,49 @@
     padding-left: 120px;
     font-size: 3.5rem;
   }
+}
+
+.popular {
+  color: #fff;
+  background-color: #ffc001;
+}
+
+.popular-content {
+  padding: 72px 0px;
+}
+
+.popular-title {
+  font-size: 42px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.85;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+.popular-image img {
+  width: 100%;
+}
+
+.login {
+  height: 100vh;
+}
+
+.login div {
+  height: 100%;
+}
+
+.login-logo {
+  background-color: #689af5;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 

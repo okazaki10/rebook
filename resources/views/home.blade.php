@@ -45,6 +45,27 @@
         </div>
       </div>
 
+      <section class="popular">
+        <div class="container">
+          <div class="popular-content">
+            <div class="popular-title">Popular</div>
+            <div class="row popular-image">
+
+              <div class="col-xs-12 col-md-6 col-lg-4">
+                <img alt="harpot" src="{{ URL::asset('img/harry-potter-chamber-of-secret.png') }}">
+              </div>
+              <div class="col-xs-12 col-md-6 col-lg-4">
+                <img alt="harpot" src="{{ URL::asset('img/very-nice.png') }}">
+              </div>
+              <div class="col-xs-12 col-md-6 col-lg-4">
+                <img alt="harpot" src="{{ URL::asset('img/mockingjay.png') }}">
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
 
 
@@ -78,7 +99,6 @@
     });
 
     $("#open-navbar").click(function() {
-      console.log('halooo')
       $('.navbar-expand-lg').toggleClass('show')
     });
   </script>

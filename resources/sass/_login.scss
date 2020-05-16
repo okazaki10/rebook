@@ -1,0 +1,17 @@
+.login {
+    height: 100vh;
+
+    div {
+        height: 100%;
+    }
+
+    &-logo {
+        background-color: #689af5;
+    }
+
+    &-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
