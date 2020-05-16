@@ -95,8 +95,8 @@
         <a href="{{action('KeranjangBelanjaController@index')}}">
             <button class="btn btn-primary mr-sm-2" type="button">keranjang belanja</button>
         </a>
-        <a href="{{action('ListBukuController@index')}}">
-            <button class="btn btn-primary mr-sm-2" type="button">lihat buku yang dijual</button>
+        <a href="{{action('TransaksiSaldoController@index')}}">
+            <button class="btn btn-primary mr-sm-2" type="button">isi saldo</button>
         </a>
     </div>
 

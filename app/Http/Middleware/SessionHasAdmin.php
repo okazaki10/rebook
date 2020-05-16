@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Session;
-use App\Daftar;
 use App\Helper\Helper;
-class SessionHasPenjual
+class SessionHasAdmin
 {
     /**
      * Handle an incoming request.
@@ -17,19 +16,9 @@ class SessionHasPenjual
      */
     public function handle($request, Closure $next)
     {
-    
-        /*
-       if(Session::get('user') == '2') {
-        return $next($request);
-        }else{
-        return redirect('/');
-        }
-        */
-        
-  
         $auth = Helper::auth(Session::get('email'),Session::get('password'));
         if ($auth != null){
-        if ($auth->status == 2 || $auth->status == 3){
+        if ($auth->status == 3){
             return $next($request);
         }else{
             return redirect('/');
@@ -37,6 +26,5 @@ class SessionHasPenjual
         }else{
             return redirect('/');
         }
-       
     }
 }

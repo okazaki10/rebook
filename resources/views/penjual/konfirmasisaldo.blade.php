@@ -42,9 +42,11 @@
             "><img src="{{asset($user->foto_profil)}}" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
             margin-left: auto;
             margin-right: auto;">
-          {{ $user->nama_lengkap }}</div>
+          {{ $user->nama_lengkap }}
+          </div>
+          saldo {{$user->saldo}}
         <a href="{{url('/')}}" class="list-group-item list-group-item-action">Beranda</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
+        <a href="{{action('KeranjangBelanjaController@index')}}" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Perencanaan Wilayah Kota</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Interior</a>
@@ -102,30 +104,40 @@
 		<table class="table table-striped">
 <thead>
 <tr>
-<th>Gambar</th>
-<th>Judul Buku</th>
-<th>Stok</th>
-
+<th>Nama</th>
+<th>saldo</th>
+<th>gambar</th>
+<th>tanggal isi saldo</th>
+<th>status</th>
 <th colspan="3" align="center">Action</th>
 </tr>
 </thead>
 <tbody>
-@foreach($list_bukus as $list_buku)
+
+@foreach($konfirmasis as $konfirmasi)
 <tr>
-<td><img src="{{asset($list_buku['gambar'])}}" height=100 width=100></td>
-<td>{{$list_buku['judul']}}</td>
-<td>{{$list_buku['stok']}}</td>
-<td><a href="{{action('ListBukuController@edit', $list_buku['id'])}}"
-class="btn btn-warning">Ubah</a></td>
+<td>{{$konfirmasi['nama_lengkap']}}</td>
+<td>{{$konfirmasi['saldo']}}</td>
+<td width="25%" ><a href="{{asset($konfirmasi['gambar'])}}"><img src="{{asset($konfirmasi['gambar'])}}" width="100%" ></a></td>
+<td>{{$konfirmasi['tanggal'] == '2001-01-01'?'-':$konfirmasi['tanggal']}}</td>
+@if($konfirmasi['status'] == '0')
+<td>belum dikonfirmasi</td>
 <td>
-<form action="{{action('ListBukuController@destroy',
-$list_buku['id'])}}" method="post">
+<form action="{{action('KonfirmasiSaldoController@store')}}" method="post">
 {{csrf_field()}}
-<input name="_method" type="hidden" value="DELETE">
-<button class="btn btn-danger" type="submit">Hapus</button>
+<input name="id" type="hidden" value="{{$konfirmasi['id']}}">
+<button class="btn btn-success" name="status" value="1" type="submit">konfirmasi</button>
+<button class="btn btn-danger" name="status" value="2" type="submit">bukti salah</button>
 </form>
 </td>
+@elseif($konfirmasi['status'] == '1')
+<td>sudah dikonfirmasi</td>
+@elseif($konfirmasi['status'] == '2')
+<td>bukti salah</td>
+@endif
 @endforeach
+</table>
+
     </div>
 
 
@@ -133,6 +145,7 @@ $list_buku['id'])}}" method="post">
 
 
   </div>
+  
   <!-- /#page-content-wrapper -->
 
   </div>

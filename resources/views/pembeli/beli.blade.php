@@ -133,6 +133,8 @@
     </div>
     <button type="submit" class="btn btn-primary">beli</button>
   </form>
+  <a href="{{action('ChatController@show', $list_buku->id_penjual)}}"
+class="btn btn-warning">Chat penjual</a>
     </div>
 
 

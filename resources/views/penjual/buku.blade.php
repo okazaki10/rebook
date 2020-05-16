@@ -121,16 +121,6 @@
       <label>gambar</label>
       <input type="file" name="gambar" class="form-control">
     </div>
-	<!--
-    <div class="form-group">
-      <label>Foto Profil</label>
-      <p><img src="foto_profil/none.jpg" height="100" width="100"></p>
-      <div class="custom-file">
-      <input type="file" class="custom-file-input" id="customFile">
-      <label class="custom-file-label" for="customFile">Choose file</label>
-      </div>
-    </div>
-	!-->
 
     <button type="submit" class="btn btn-primary">tambahkan buku</button>
   </form>

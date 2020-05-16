@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\HomePage;
+use App\AdminPage;
 use Illuminate\Http\Request;
-use Session;
-use App\Helper\Helper;
-class HomePageController extends Controller
+
+class AdminPageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,29 +14,7 @@ class HomePageController extends Controller
      */
     public function index()
     {
-        /*
-        if (Session::get('user') == '1'){
-            return redirect('pembeli/');
-        }else if(Session::get('user') == '2'){
-            return redirect('penjual/'); 
-        }else{
-            return view('welcome');
-        }
-        */
-        if (Session::has('email')){
-        $auth = Helper::auth(Session::get('email'),Session::get('password'));
-        if ($auth != null){
-            if ($auth->status == 1){
-                return redirect('pembeli/');
-                }else if($auth->status == 2 || $auth->status == 3){
-                return redirect('penjual/');
-                }
-            }else{
-            return view('welcome');
-        }
-        }else{
-            return view('welcome');
-        }
+        //
     }
 
     /**
@@ -45,7 +22,6 @@ class HomePageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-  
     public function create()
     {
         //
@@ -65,10 +41,10 @@ class HomePageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\HomePage  $homePage
+     * @param  \App\AdminPage  $adminPage
      * @return \Illuminate\Http\Response
      */
-    public function show(HomePage $homePage)
+    public function show(AdminPage $adminPage)
     {
         //
     }
@@ -76,10 +52,10 @@ class HomePageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\HomePage  $homePage
+     * @param  \App\AdminPage  $adminPage
      * @return \Illuminate\Http\Response
      */
-    public function edit(HomePage $homePage)
+    public function edit(AdminPage $adminPage)
     {
         //
     }
@@ -88,10 +64,10 @@ class HomePageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\HomePage  $homePage
+     * @param  \App\AdminPage  $adminPage
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, HomePage $homePage)
+    public function update(Request $request, AdminPage $adminPage)
     {
         //
     }
@@ -99,10 +75,10 @@ class HomePageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\HomePage  $homePage
+     * @param  \App\AdminPage  $adminPage
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HomePage $homePage)
+    public function destroy(AdminPage $adminPage)
     {
         //
     }

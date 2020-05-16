@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Chat;
 use Illuminate\Http\Request;
+use Session;
+use App\Helper\Helper;
+use App\Daftar;
 
 class ChatController extends Controller
 {
@@ -14,7 +17,7 @@ class ChatController extends Controller
      */
     public function index()
     {
-        //
+     
     }
 
     /**
@@ -35,7 +38,8 @@ class ChatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $chat = new Chat;
+        
     }
 
     /**
@@ -44,9 +48,51 @@ class ChatController extends Controller
      * @param  \App\Chat  $chat
      * @return \Illuminate\Http\Response
      */
-    public function show(Chat $chat)
+    public function show($id)
     {
-        //
+        $user = Helper::auth(Session::get('email'), Session::get('password'));
+        $chat_users  = Chat::where('id_user',$user->id)->where('id_penjual',$id)->orWhere('id_user',$id)->where('id_penjual',$user->id)->get();
+        $pesans = array();
+        $total = 0;
+        if($chat_users[0]['id_user'] != $user->id){
+            $id_penjual = $chat_users[0]['id_user'];
+        }else{
+            $id_penjual = $chat_users[0]['id_penjual'];
+        }
+        foreach($chat_users as $chat_user){
+            $pembeli = Daftar::find($chat_user['id_user']);
+            $penjual = Daftar::find($chat_user['id_penjual']);
+            $pesans[$total]['id'] = $chat_user['id'];
+            $pesans[$total]['nama_pembeli'] = $pembeli->nama_lengkap;
+            $pesans[$total]['nama_penjual'] = $penjual->nama_lengkap;
+            $pesans[$total]['chat'] = $chat_user['chat'];
+            $pesans[$total]['tanggal'] = $chat_user['tanggal'];
+            $total++;
+        }
+        return view('pembeli.chat', compact('user', 'pesans','id_penjual'));
+    }
+
+    public function handle($id){
+        $user = Helper::auth(Session::get('email'), Session::get('password'));
+        $chat_users  = Chat::where('id_user',$user->id)->where('id_penjual',$id)->orWhere('id_user',$id)->where('id_penjual',$user->id)->get();
+        $pesans = array();
+        $total = 0;
+        if($chat_users[0]['id_user'] != $user->id){
+            $id_penjual = $chat_users[0]['id_user'];
+        }else{
+            $id_penjual = $chat_users[0]['id_penjual'];
+        }
+        foreach($chat_users as $chat_user){
+            $pembeli = Daftar::find($chat_user['id_user']);
+            $penjual = Daftar::find($chat_user['id_penjual']);
+            $pesans[$total]['id'] = $chat_user['id'];
+            $pesans[$total]['nama_pembeli'] = $pembeli->nama_lengkap;
+            $pesans[$total]['nama_penjual'] = $penjual->nama_lengkap;
+            $pesans[$total]['chat'] = $chat_user['chat'];
+            $pesans[$total]['tanggal'] = $chat_user['tanggal'];
+            $total++;
+        }
+        return view('pembeli.handlechat', compact('user', 'pesans','id_penjual'));
     }
 
     /**

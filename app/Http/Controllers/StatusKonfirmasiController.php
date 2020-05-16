@@ -26,7 +26,7 @@ class StatusKonfirmasiController extends Controller
         $data = DB::table('status_konfirmasi')->join('user','user.id','=','status_konfirmasi.id_user')
         ->select('status_konfirmasi.id','user.nama_lengkap','user.alamat','user.no_hp','status_konfirmasi.tanggal_mulai','status_konfirmasi.tanggal_selesai','status_konfirmasi.status')
         ->where('status_konfirmasi.id_penjual',$user->id)
-        ->get(); 
+        ->get();
         $konfirmasis = json_decode($data, true);
 
       
@@ -111,12 +111,16 @@ class StatusKonfirmasiController extends Controller
             $total = 0;
             foreach($keranjangs as $keranjang){
                 $total = $total + $keranjang['harga'];
+                $list_buku = List_buku::find($keranjang['id_list_buku']);
+                $list_buku->stok = $list_buku->stok + $keranjang['jumlah'];
+                $list_buku->save();
             }
+           
             $pembeli = Daftar::find($konfirmasi->id_user);
             $pembeli->saldo = $pembeli->saldo + $total;
             $pembeli->save();
         }
-        return redirect('penjual.konfirmasi')->with('success','Data has been updated');
+        return redirect('penjual/konfirmasi')->with('success','Data has been updated');
     }
 
     /**

@@ -42,9 +42,11 @@
             "><img src="{{asset($user->foto_profil)}}" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
             margin-left: auto;
             margin-right: auto;">
-          {{ $user->nama_lengkap }}</div>
+          {{ $user->nama_lengkap }}
+          </div>
+          saldo {{$user->saldo}}
         <a href="{{url('/')}}" class="list-group-item list-group-item-action">Beranda</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
+        <a href="{{action('KeranjangBelanjaController@index')}}" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Perencanaan Wilayah Kota</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Interior</a>
@@ -98,41 +100,55 @@
 		<div class="alert alert-success">
 			<p>{{ \Session::get('success') }}</p>
 		</div><br />
-		@endif
-		<table class="table table-striped">
-<thead>
-<tr>
-<th>Gambar</th>
-<th>Judul Buku</th>
-<th>Stok</th>
-
-<th colspan="3" align="center">Action</th>
-</tr>
-</thead>
-<tbody>
-@foreach($list_bukus as $list_buku)
-<tr>
-<td><img src="{{asset($list_buku['gambar'])}}" height=100 width=100></td>
-<td>{{$list_buku['judul']}}</td>
-<td>{{$list_buku['stok']}}</td>
-<td><a href="{{action('ListBukuController@edit', $list_buku['id'])}}"
-class="btn btn-warning">Ubah</a></td>
-<td>
-<form action="{{action('ListBukuController@destroy',
-$list_buku['id'])}}" method="post">
+        @endif
+  
+	<div id="handle">
+	</div>
+{{$id_penjual}}
 {{csrf_field()}}
-<input name="_method" type="hidden" value="DELETE">
-<button class="btn btn-danger" type="submit">Hapus</button>
-</form>
-</td>
-@endforeach
+    <input type="text" name="message" id="message">
+    <button type="submit" name="send" id="send" class="btn btn-primary" onclick="kirim()">kirim</button>
+
+
     </div>
 
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+      </script>
+        <script>
+            getMessage();
+            setInterval(function() {
+            getMessage();
+            }, 500);  
+         function getMessage() {
+            $.ajax({
+               type:'GET',
+               url:'handlechat/{{$id_penjual}}',
+               data:'',
+               success:function(data) {
+                  $("#handle").html(data);
+               }
+            });
+         }
+         function kirim(){
+            var message = $('#message').val();
+            var csrf_token = '{{csrf_token()}}';
+            var id_penjual = '{{$id_penjual}}';
+            $.ajax({
+               type:'POST',
+               url:"{{action('ChatController@store')}}",
+               data:'_token='+csrf_token+'&message='+message+'&id_penjual='+id_penjual,
+               success:function(data) {
+                  
+               }
+            });
+         }
+      </script>
 
        
 
 
   </div>
+  
   <!-- /#page-content-wrapper -->
 
   </div>

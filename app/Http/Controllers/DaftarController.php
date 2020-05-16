@@ -72,7 +72,7 @@ class DaftarController extends Controller
             Session::put('password',$auth->password);
             if ($auth->status == 1){
                 return redirect('pembeli/');
-                }else if($auth->status == 2){
+                }else if($auth->status == 2 || $auth->status == 3){
                 return redirect('penjual/');
                 }
         }else{
