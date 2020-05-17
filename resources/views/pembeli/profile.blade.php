@@ -33,9 +33,9 @@
       <!-- Sidebar -->
       <div class="bg-light" id="sidebar-wrapper" style="position: fixed;z-index: 1000;" >
 
-        <div class="list-group list-group-flush">
+      <div class="list-group list-group-flush">
           
-            <div class="sidebar-heading bg-dark text-light " style="
+            <a href="{{action('ProfilePembeliController@index')}}"><div class="sidebar-heading bg-dark text-light " style="
             padding-top: 60px;
             text-align: center;
 
@@ -66,25 +66,25 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
           
-                <div class="form-inline">
-                  <input class="form-control mr-sm-2" type="text" placeholder="NRP" aria-label="Search" id="nrp">
-                  <input class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Search" id="password">
-                  <button class="btn btn-success mr-sm-2">Login</button>
-                  
-                </div>
-            <a href="{{action('DaftarController@logout')}}">
-              <button class="btn btn-primary mr-sm-2" type="button">Logout</button>
-            </a>
+          <div class="form-inline">
+            <input class="form-control mr-sm-2" type="text" placeholder="NRP" aria-label="Search" id="nrp">
+            <input class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Search" id="password">
+            <button class="btn btn-success mr-sm-2">Login</button>
+            
+          </div>
+      <a href="{{action('DaftarController@logout')}}">
+        <button class="btn btn-primary mr-sm-2" type="button">Logout</button>
+      </a>
 
-          </ul>
+    </ul>
         </div>
       </nav>
       
       <div id="containerfluid" class="container-fluid">
  
-        <h2 class="mt-4">Tambahkan Buku</h2>
+        <h2 class="mt-4">Daftar</h2>
 		@if ($errors->any())
 		<div class="alert alert-danger">
 			<ul>
@@ -94,39 +94,64 @@
 			</ul>
 		</div><br />
 		@endif
-		@if (\Session::has('success'))
-		<div class="alert alert-success">
-			<p>{{ \Session::get('success') }}</p>
+		@if (\Session::has('failed'))
+		<div class="alert alert-danger">
+			<p>{{ \Session::get('failed') }}</p>
 		</div><br />
 		@endif
-		<form method="post" enctype="multipart/form-data" action="{{action('DetailBukuController@store')}}">
+		<form enctype="multipart/form-data" method="post" action="{{action('ProfilePembeliController@store')}}">
 			{{csrf_field()}}
     <div class="form-group">
-      <label>judul</label>
-      <input type="text" name="judul" class="form-control">
+      <label>email</label>
+      <input type="text" name="email" class="form-control" value="{{$daftar->email}}">
     </div>
     <div class="form-group">
-      <label>kategori</label>
-      <input type="text" name="kategori" class="form-control">
+      <label>password</label>
+      <input type="password" name="password" class="form-control" value="{{$daftar->password}}">
     </div>
     <div class="form-group">
-      <label>tanggal terbit</label>
-      <input type="date" name="tanggal_terbit" class="form-control">
+      <label>konfirmasi password</label>
+      <input type="password" name="konfirmasi_password" class="form-control" value="{{$daftar->password}}">
     </div>
     <div class="form-group">
-      <label>penulis</label>
-      <input type="text" name="penulis" class="form-control">
+      <label>Nama Lengkap</label>
+      <input type="text" name="nama_lengkap" class="form-control" value="{{$daftar->nama_lengkap}}">
     </div>
     <div class="form-group">
-      <label>harga</label>
-      <input type="number" name="harga" class="form-control">
+      <label>Alamat</label>
+      <input type="text" name="alamat" class="form-control" value="{{$daftar->alamat}}">
     </div>
-    <div class="form-group">  
-      <label>gambar</label>
-      <input type="file" name="gambar" class="form-control">
+    <div class="form-group">
+      <label>Tanggal Lahir</label>
+      <input type="date" name="tanggal_lahir" class="form-control" value="{{$daftar->tanggal_lahir}}">
     </div>
+	<div class="form-group">
+      <label>no hp</label>
+      <input type="number" name="no_hp" class="form-control" value="{{$daftar->no_hp}}">
+    </div>
+    <div class="form-group">
+      <label>status</label>
+     
+       <p>{{$daftar->status == 1 ? 'pembeli' : ''}}
+		{{$daftar->status == 2 ? 'penjual' : ''}}</p>
+     
+    </div>
+    <div class="form-group">
+      <label>foto profil</label>
+      <input type="file" name="foto_profil" class="form-control">
+    </div>
+	<!--
+    <div class="form-group">
+      <label>Foto Profil</label>
+      <p><img src="foto_profil/none.jpg" height="100" width="100"></p>
+      <div class="custom-file">
+      <input type="file" class="custom-file-input" id="customFile">
+      <label class="custom-file-label" for="customFile">Choose file</label>
+      </div>
+    </div>
+	!-->
 
-    <button type="submit" class="btn btn-primary">tambahkan buku</button>
+    <button type="submit" class="btn btn-primary">Daftar</button>
   </form>
 
     </div>

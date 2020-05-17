@@ -18,7 +18,7 @@ class ListBukuController extends Controller
     public function index()
     {
         $user = Helper::auth(Session::get('email'),Session::get('password'));
-        $data = DB::table('list_buku')->join('detail_buku','list_buku.id_buku','=','detail_buku.id')->select('list_buku.id','list_buku.id_penjual','detail_buku.judul','list_buku.stok','detail_buku.gambar')->where('detail_buku.id_penjual',$user->id)->get();  
+        $data = DB::table('list_buku')->join('detail_buku','list_buku.id_buku','=','detail_buku.id')->select('list_buku.id','list_buku.id_penjual','detail_buku.judul','list_buku.stok','detail_buku.gambar','detail_buku.kategori')->where('detail_buku.id_penjual',$user->id)->get();  
         $list_bukus = json_decode($data, true);
         return view('penjual.lihatbuku',compact('list_bukus','user'));
     }

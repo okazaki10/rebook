@@ -99,36 +99,22 @@
 			<p>{{ \Session::get('success') }}</p>
 		</div><br />
 		@endif
-		<form method="post" enctype="multipart/form-data" action="{{action('DetailBukuController@store')}}">
-			{{csrf_field()}}
-    <div class="form-group">
-      <label>judul</label>
-      <input type="text" name="judul" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>kategori</label>
-      <input type="text" name="kategori" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>tanggal terbit</label>
-      <input type="date" name="tanggal_terbit" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>penulis</label>
-      <input type="text" name="penulis" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>harga</label>
-      <input type="number" name="harga" class="form-control">
-    </div>
-    <div class="form-group">  
-      <label>gambar</label>
-      <input type="file" name="gambar" class="form-control">
-    </div>
+		<table class="table table-striped">
+<thead>
+<tr>
+<th>nama penjual</th>
 
-    <button type="submit" class="btn btn-primary">tambahkan buku</button>
-  </form>
-
+<th colspan="3" align="center">Action</th>
+</tr>
+</thead>
+<tbody>
+    <tr>
+@foreach($pesans as $pesan)
+<td>{{$pesan['nama_pembeli']}}</td>
+<td><a href="{{action('ChatController@show', $pesan['id_penjual'])}}"
+class="btn btn-warning">Lihat</a></td>
+    </tr>
+@endforeach
     </div>
 
 
@@ -158,3 +144,5 @@
   </body>
 
   </html>
+  <div>
+

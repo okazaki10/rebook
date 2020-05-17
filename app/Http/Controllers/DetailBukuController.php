@@ -41,6 +41,7 @@ class DetailBukuController extends Controller
         $detail_buku = new Detail_buku;
         $this->validate(request(), [
             'judul' => 'required',
+            'kategori' => 'required',
             'tanggal_terbit' => 'required',
             'penulis' => 'required',
             'harga' => 'required|numeric',
@@ -49,6 +50,7 @@ class DetailBukuController extends Controller
         $user = Helper::auth(Session::get('email'),Session::get('password'));
         $detail_buku->id_penjual = $user->id;
         $detail_buku->judul = $request->get('judul');
+        $detail_buku->kategori = $request->get('kategori');
         $detail_buku->tanggal_terbit = $request->get('tanggal_terbit');
         $detail_buku->penulis = $request->get('penulis');
         $detail_buku->harga = $request->get('harga');     

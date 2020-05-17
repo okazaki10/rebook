@@ -127,11 +127,7 @@
     </div>
 	<div class="form-group">
       <label>no hp</label>
-      <input type="text" name="no_hp" class="form-control">
-    </div>
-	<div class="form-group">
-      <label>saldo</label>
-      <input type="text" name="saldo" class="form-control">
+      <input type="number" name="no_hp" class="form-control">
     </div>
     <div class="form-group">
       <label>status</label>

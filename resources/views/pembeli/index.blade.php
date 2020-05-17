@@ -35,7 +35,7 @@
 
         <div class="list-group list-group-flush">
           
-            <div class="sidebar-heading bg-dark text-light " style="
+            <a href="{{action('ProfilePembeliController@index')}}"><div class="sidebar-heading bg-dark text-light " style="
             padding-top: 60px;
             text-align: center;
 
@@ -97,6 +97,9 @@
         </a>
         <a href="{{action('TransaksiSaldoController@index')}}">
             <button class="btn btn-primary mr-sm-2" type="button">isi saldo</button>
+        </a>
+        <a href="{{action('ChatController@index')}}">
+            <button class="btn btn-primary mr-sm-2" type="button">chat penjual</button>
         </a>
     </div>
 

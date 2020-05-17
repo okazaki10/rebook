@@ -9,7 +9,7 @@ use App\Helper\Helper;
 use App\Daftar;
 use DB;
 
-class ChatController extends Controller
+class ChatPenjualController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -43,7 +43,7 @@ class ChatController extends Controller
             $total++;
         }
         $pesans = array_unique($pesans, SORT_REGULAR);
-        return view('pembeli.chatpage', compact('user', 'pesans'));
+        return view('penjual.chatpage', compact('user', 'pesans'));
     }
 
     /**
@@ -117,7 +117,7 @@ class ChatController extends Controller
             ->get();
         $pesans = json_decode($chat_users, true);
         $id_penjual = $id;
-        return view('pembeli.chat', compact('user', 'pesans', 'id_penjual'));
+        return view('penjual.chat', compact('user', 'pesans', 'id_penjual'));
     }
 
     public function handle($id)
@@ -135,7 +135,7 @@ class ChatController extends Controller
             ->get();
         $pesans = json_decode($chat_users, true);
         $id_penjual = $id;
-        return view('pembeli.handlechat', compact('user', 'pesans', 'id_penjual'));
+        return view('penjual.handlechat', compact('user', 'pesans', 'id_penjual'));
     }
 
     /**

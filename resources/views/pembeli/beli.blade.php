@@ -114,6 +114,10 @@
     <p>{{$list_buku->judul}}</p>
     </div>
     <div class="form-group">
+    <label>kategori buku</label>
+    <p>{{$list_buku->kategori}}</p>
+    </div>
+    <div class="form-group">
     <label>stok</label>
     <p>{{$list_buku->stok}}</p>
     </div>

@@ -101,6 +101,9 @@
         <a href="{{action('StatusKonfirmasiController@index')}}">
             <button class="btn btn-primary mr-sm-2" type="button">konfirmasi transaksi</button>
         </a>
+        <a href="{{action('ChatPenjualController@index')}}">
+            <button class="btn btn-primary mr-sm-2" type="button">chat pembeli</button>
+        </a>
         @if($user->status == '3')
         <a href="{{action('KonfirmasiSaldoController@index')}}">
             <button class="btn btn-primary mr-sm-2" type="button">konfirmasi saldo</button>

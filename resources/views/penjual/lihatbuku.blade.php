@@ -104,6 +104,7 @@
 <tr>
 <th>Gambar</th>
 <th>Judul Buku</th>
+<th>Kategori</th>
 <th>Stok</th>
 
 <th colspan="3" align="center">Action</th>
@@ -114,6 +115,7 @@
 <tr>
 <td><img src="{{asset($list_buku['gambar'])}}" height=100 width=100></td>
 <td>{{$list_buku['judul']}}</td>
+<td>{{$list_buku['kategori']}}</td>
 <td>{{$list_buku['stok']}}</td>
 <td><a href="{{action('ListBukuController@edit', $list_buku['id'])}}"
 class="btn btn-warning">Ubah</a></td>

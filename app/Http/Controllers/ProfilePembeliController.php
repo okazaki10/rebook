@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Daftar;
+use App\ProfilePembeli;
 use Illuminate\Http\Request;
-use Session;
 use App\Helper\Helper;
-
-class DaftarController extends Controller
+use DB;
+use App\Daftar;
+use Session;
+class ProfilePembeliController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,11 @@ class DaftarController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { }
+    {
+        $user = Helper::auth(Session::get('email'), Session::get('password'));
+        $daftar = Daftar::find($user->id);
+        return view('pembeli.profile',compact('user','daftar'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -25,7 +29,7 @@ class DaftarController extends Controller
      */
     public function create()
     {
-        return view('daftar');
+        //
     }
 
     /**
@@ -36,6 +40,7 @@ class DaftarController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Helper::auth(Session::get('email'), Session::get('password'));
         $this->validate(request(), [
             'email' => 'required|min:8',
             'password' => 'required|min:4',
@@ -44,10 +49,9 @@ class DaftarController extends Controller
             'alamat' => 'required',
             'tanggal_lahir' => 'required',
             'no_hp' => 'required|numeric',
-            'status' => 'required',
             'foto_profil' => 'nullable'
         ]);
-        $daftar = new Daftar;
+        $daftar = Daftar::find($user->id);
         if ($request->get('password') == $request->get('konfirmasi_password')) {
             $daftar->email = $request->get('email');
             $daftar->password = $request->get('password');
@@ -55,45 +59,27 @@ class DaftarController extends Controller
             $daftar->alamat = $request->get('alamat');
             $daftar->tanggal_lahir = $request->get('tanggal_lahir');
             $daftar->no_hp = $request->get('no_hp');
-            $daftar->saldo = '0';
-            $daftar->status = $request->get('status');
             if ($request->hasFile('foto_profil')) {
                 $path = $request->file('foto_profil')->store('public/profil');
                 $path2 = str_replace("public", "storage", $path);
                 $daftar->foto_profil = $path2;
-            } else {
-                $daftar->foto_profil = "storage/no_profile.jpg";
             }
             $daftar->save();
+            Session::put('email', $daftar->email);
+            Session::put('password', $daftar->password);
             return redirect('/');
         } else {
             return redirect('daftar/create')->with('failed', 'konfirmasi password tidak sama');
         }
     }
 
-    public function validasi(Request $request)
-    {
-        $auth = Helper::auth($request->email, $request->password);
-        if ($auth != null) {
-            Session::put('email', $auth->email);
-            Session::put('password', $auth->password);
-            if ($auth->status == 1) {
-                return redirect('pembeli/');
-            } else if ($auth->status == 2 || $auth->status == 3) {
-                return redirect('penjual/');
-            }
-        } else {
-            return redirect('/');
-        }
-    }
-
     /**
      * Display the specified resource.
      *
-     * @param  \App\Daftar  $daftar
+     * @param  \App\ProfilePembeli  $profilePembeli
      * @return \Illuminate\Http\Response
      */
-    public function show(Daftar $daftar)
+    public function show(ProfilePembeli $profilePembeli)
     {
         //
     }
@@ -101,22 +87,22 @@ class DaftarController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Daftar  $daftar
+     * @param  \App\ProfilePembeli  $profilePembeli
      * @return \Illuminate\Http\Response
      */
-    public function edit(Daftar $daftar)
+    public function edit($id)
     {
-        //
+        
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Daftar  $daftar
+     * @param  \App\ProfilePembeli  $profilePembeli
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Daftar $daftar)
+    public function update(Request $request, ProfilePembeli $profilePembeli)
     {
         //
     }
@@ -124,16 +110,11 @@ class DaftarController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Daftar  $daftar
+     * @param  \App\ProfilePembeli  $profilePembeli
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Daftar $daftar)
+    public function destroy(ProfilePembeli $profilePembeli)
     {
         //
-    }
-    public function logout()
-    {
-        Session::flush();
-        return redirect('/');
     }
 }
