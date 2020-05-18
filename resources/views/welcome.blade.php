@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,68 +30,59 @@
   <div class="d-flex" id="wrapper">
 
     <!-- Sidebar -->
-    <div class="bg-light" id="sidebar-wrapper" style="position: fixed;z-index: 1000;" >
+    <div class="bg-light" id="sidebar-wrapper" style="position: fixed;z-index: 1000;">
 
       <div class="list-group list-group-flush">
-        
-          <div class="sidebar-heading bg-dark text-light " style="
+
+        <div class="sidebar-heading bg-dark text-light " style="
           padding-top: 60px;
           text-align: center;
 
           "><img src="https://st2.depositphotos.com/1104517/11965/v/950/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
           margin-left: auto;
           margin-right: auto;">
-        Anda Belum Login</div>
+          Anda Belum Login</div>
 
-      <a href="logout.html" class="list-group-item list-group-item-action">Beranda</a>
-      <a href="logout.html" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
-      <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
-      <a href="logout.html" class="list-group-item list-group-item-action bg-light">Perencanaan Wilayah Kota</a>
-      <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Interior</a>
-      <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Komunikasi Visual</a>
+
+      </div>
     </div>
-  </div>
-  <!-- /#sidebar-wrapper -->
+    <!-- /#sidebar-wrapper -->
 
-  <!-- Page Content -->
-  <div id="page-content-wrapper" style="width: 100%;">
+    <!-- Page Content -->
+    <div id="page-content-wrapper" style="width: 100%;">
 
-    <nav class="navbar navbar-dark bg-dark navbar-expand-lg" style="position: fixed; width:100%;z-index: 10000;">
-      <button class="btn btn-outline-light" id="menu-toggle">Menu</button>
-         <div class="navbar-brand" style="background-image: url('kemas.png');background-size: 50px 50px;background-position: left;background-repeat: no-repeat; padding-left: 50px">Rebook</div>
+      <nav class="navbar navbar-dark bg-dark navbar-expand-lg" style="position: fixed; width:100%;z-index: 10000;">
+        <button class="btn btn-outline-light" id="menu-toggle">Menu</button>
+        <div class="navbar-brand" style="background-image: url('kemas.png');background-size: 50px 50px;background-position: left;background-repeat: no-repeat; padding-left: 50px">Rebook</div>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-          <div class="navbar-brand">Cari Semua Barang</div>
-          <form class="form-inline" action="cari.html" method="GET">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-light" style="margin-right: 50px;" type="submit">Search</button>
-              </form>
-              <div class="form-inline">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            
+            <div class="form-inline">
               <form method="post" action="{{action('DaftarController@validasi')}}">
-			{{csrf_field()}}
+                {{csrf_field()}}
                 <input class="form-control mr-sm-2" type="text" placeholder="email" aria-label="Search" id="nrp" name="email">
                 <input class="form-control mr-sm-2" type="password" placeholder="password" aria-label="Search" id="password" name="password">
                 <button type="submit" class="btn btn-success mr-sm-2">Login</button>
-                </form>
-                
-              </div>  
-          <a href="{{action('DaftarController@create')}}">
-            <button class="btn btn-primary mr-sm-2" type="button">Daftar</button>
-          </a>
+              </form>
 
-        </ul>
-      </div>
-    </nav>
-    
-    <div id="containerfluid" class="container-fluid">
-      <h1 class="mt-4" style="font-weight: bold;"></h1>
-      @if ($errors->any())
+            </div>
+            <a href="{{action('DaftarController@create')}}">
+              <button class="btn btn-primary mr-sm-2" type="button">Daftar</button>
+            </a>
+
+          </ul>
+        </div>
+      </nav>
+
+      <div id="containerfluid" class="container-fluid">
+        <h1 class="mt-4" style="font-weight: bold;"></h1>
+        @if ($errors->any())
         <div class="alert alert-danger">
           <ul>
             @foreach ($errors->all() as $error)
@@ -107,35 +97,42 @@
         </div><br />
         @endif
 
+      </div>
+
+
+
     </div>
-   
-    
+
+
+
+
+
+  </div>
+  <!-- /#page-content-wrapper -->
 
   </div>
 
-
-     
-
-
-</div>
-<!-- /#page-content-wrapper -->
-
-</div>
-
-<!-- /#wrapper -->
+  <!-- /#wrapper -->
 
 
-<!-- Menu Toggle Script -->
-<script>
-  $("#menu-toggle").click(function(e) {
-    e.preventDefault();
-    $("#wrapper").toggleClass("toggled");
-  });
-  $(document).ready(function() {
-    $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
-    $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
-  });
-</script>
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+    $(document).ready(function() {
+      $('#list').click(function(event) {
+        event.preventDefault();
+        $('#products .item').addClass('list-group-item');
+      });
+      $('#grid').click(function(event) {
+        event.preventDefault();
+        $('#products .item').removeClass('list-group-item');
+        $('#products .item').addClass('grid-group-item');
+      });
+    });
+  </script>
 
 </body>
 
