@@ -44,11 +44,7 @@
             margin-right: auto;">
           Anda Belum Login</div>
         <a href="{{url('/')}}" class="list-group-item list-group-item-action">Beranda</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Perencanaan Wilayah Kota</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Interior</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Komunikasi Visual</a>
+   
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -66,19 +62,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-          
-                <div class="form-inline">
-                  <input class="form-control mr-sm-2" type="text" placeholder="NRP" aria-label="Search" id="nrp">
-                  <input class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Search" id="password">
-                  <button class="btn btn-success mr-sm-2">Login</button>
-                  
-                </div>
-            <a href="daftar.html">
-              <button class="btn btn-primary mr-sm-2" type="button">Daftar</button>
-            </a>
-
-          </ul>
+         
         </div>
       </nav>
       
