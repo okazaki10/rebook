@@ -11,7 +11,7 @@
 @foreach($pesans as $pesan)
 <tr>
 
-<td>{{$pesan['nama_pembeli']}}<br>{{$pesan['chat']}}
+<td><p style="font-weight:bold;">{{$pesan['nama_pembeli']}}</p>{{$pesan['chat']}}
 </td>
 <td>{{$pesan['tanggal']}}</td>
 </tr>

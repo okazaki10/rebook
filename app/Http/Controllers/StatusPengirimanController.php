@@ -28,6 +28,7 @@ class StatusPengirimanController extends Controller
         $data = DB::table('status_konfirmasi')->join('user', 'user.id', '=', 'status_konfirmasi.id_penjual')
             ->select('status_konfirmasi.id', 'user.nama_lengkap', 'user.alamat', 'user.no_hp', 'status_konfirmasi.tanggal_mulai', 'status_konfirmasi.tanggal_selesai', 'status_konfirmasi.status', 'status_konfirmasi.bisa_disewa')
             ->where('status_konfirmasi.id_user', $user->id)
+            ->orderBy('id','asc')
             ->get();
         $konfirmasis = json_decode($data, true);
         return view('pembeli.konfirmasi', compact('user', 'konfirmasis'));
