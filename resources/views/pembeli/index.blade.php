@@ -83,7 +83,7 @@
       </nav>
       
       <div id="containerfluid" class="container-fluid">
-      <h2 class="mt-4">Penjual</h2>
+      <h2 class="mt-4">Pembeli</h2>
       @if (\Session::has('success'))
 		<div class="alert alert-success">
 			<p>{{ \Session::get('success') }}</p>
