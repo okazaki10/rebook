@@ -105,7 +105,8 @@
           <option value="penulis">penulis</option>
         </select>
         <input type="text" name="pencarian">
-        <button type="submit" class="btn btn-success mr-sm-2">cari</button>
+        <button type="submit" name="sewa" value="0" class="btn btn-success mr-sm-2">cari</button>
+        <button type="submit" name="sewa" value="1" class="btn btn-primary mr-sm-2">cari yang bisa disewa</button>
         </form>
         <table class="table table-striped">
           <thead>
@@ -114,6 +115,7 @@
               <th>Judul Buku</th>
               <th>Kategori</th>
               <th>Harga</th>
+              <th>Bisa disewa</th>
               <th>Stok</th>
 
               <th colspan="3" align="center">Action</th>
@@ -126,6 +128,7 @@
               <td>{{$list_buku->judul}}</td>
               <td>{{$list_buku->kategori}}</td>
               <td>{{$list_buku->harga}}</td>
+              <td>{{$list_buku->bisa_disewa == '1'?'ya':'tidak'}}</td>
               <td>{{$list_buku->stok}}</td>
               <td><a href="{{action('PembelianController@show', $list_buku->id)}}" class="btn btn-warning">Lihat</a></td>
               @endforeach

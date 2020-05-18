@@ -125,9 +125,12 @@
         <form method="POST" enctype="multipart/form-data" action="{{action('StatusPengirimanController@update',$id)}}">
           {{csrf_field()}}
           <input name="_method" type="hidden" value="PATCH">
-         
+          <input name="sewa" type="hidden" value="{{$sewa}}">
           @if($konfirmasis[0]['status'] == '1')
           <button type="submit" name="status" value="2" class="btn btn-primary">konfirmasi barang sudah sampai</button>
+          @endif
+          @if($konfirmasis[0]['status'] == '2' && $konfirmasis[0]['bisa_disewa'] == '1')
+          <button type="submit" name="status" value="4" class="btn btn-primary">kembalikan barang</button>
           @endif
          
         </form>

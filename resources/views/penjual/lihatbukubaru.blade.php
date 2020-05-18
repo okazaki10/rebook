@@ -107,6 +107,7 @@
               <th>Tanggal terbit</th>
               <th>Penulis</th>
               <th>Harga</th>
+              <th>bisa disewa?</th>
               <th>Isi Stok</th>
               <th colspan="3" align="center">Action</th>
             </tr>
@@ -120,6 +121,7 @@
               <td>{{$detail_buku['tanggal_terbit']}}</td>
               <td>{{$detail_buku['penulis']}}</td>
               <td>{{$detail_buku['harga']}}</td>
+              <td>{{$detail_buku['bisa_disewa'] == '1'?'ya':'tidak'}}</td>
               <form method="post" enctype="multipart/form-data" action="{{action('ListBukuController@store')}}">
                 {{csrf_field()}}
                 <td>
@@ -127,7 +129,7 @@
                   <input type="number" name="stok" class="form-control">
                 </td>
                 <td>
-                  <button type="submit" class="btn btn-primary">jual buku</button>
+                  <button type="submit" class="btn btn-primary">Jual</button>
                 </td>
               </form>
               <td><a href="{{action('DetailBukuController@edit', $detail_buku['id'])}}" class="btn btn-warning">Ubah</a></td>

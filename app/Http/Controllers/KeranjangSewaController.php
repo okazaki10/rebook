@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Keranjang_belanja;
+use App\KeranjangSewa;
 use Illuminate\Http\Request;
 use Session;
 use App\Helper\Helper;
@@ -10,7 +10,7 @@ use DB;
 use App\Detail_buku;
 use App\List_buku;
 use App\Status_konfirmasi;
-class KeranjangBelanjaController extends Controller
+class KeranjangSewaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,13 +20,13 @@ class KeranjangBelanjaController extends Controller
     public function index()
     {
         $user = Helper::auth(Session::get('email'),Session::get('password'));
-        $data = DB::table('keranjang_belanja')->join('list_buku','list_buku.id','=','keranjang_belanja.id_list_buku')->join('detail_buku','list_buku.id_buku','=','detail_buku.id')->select('keranjang_belanja.id','keranjang_belanja.jumlah','keranjang_belanja.harga','detail_buku.judul','detail_buku.gambar','keranjang_belanja.harga')->where('id_user',$user->id)->where('id_status','0')->get();  
+        $data = DB::table('keranjang_sewa')->join('list_buku','list_buku.id','=','keranjang_sewa.id_list_buku')->join('detail_buku','list_buku.id_buku','=','detail_buku.id')->select('keranjang_sewa.id','keranjang_sewa.jumlah','keranjang_sewa.harga','detail_buku.judul','detail_buku.gambar','keranjang_sewa.harga')->where('id_user',$user->id)->where('id_status','0')->get();  
         $keranjangs = json_decode($data, true);
         $total = 0;
         foreach($keranjangs as $keranjang){
             $total = $total + $keranjang['harga'];
         }
-        return view('pembeli.keranjang',compact('user','keranjangs','total'));
+        return view('pembeli.keranjangsewa',compact('user','keranjangs','total'));
     }
 
     /**
@@ -48,7 +48,7 @@ class KeranjangBelanjaController extends Controller
     public function store(Request $request)
     {
         $user = Helper::auth(Session::get('email'),Session::get('password'));
-        $keranjangs = Keranjang_belanja::where('id_user',$user->id)->where('id_status','0')->get();
+        $keranjangs = KeranjangSewa::where('id_user',$user->id)->where('id_status','0')->get();
         $total = 0;
         foreach($keranjangs as $keranjang){
             $total = $total + $keranjang['harga'];
@@ -60,9 +60,9 @@ class KeranjangBelanjaController extends Controller
         $konfirmasi->tanggal_mulai = date('y-m-d');
         $konfirmasi->tanggal_selesai = '01-01-01';
         $konfirmasi->status = '0';
-        $konfirmasi->bisa_disewa = '0';
+        $konfirmasi->bisa_disewa = '1';
         $konfirmasi->save();
-        Keranjang_belanja::where('id_user',$user->id)->where('id_status','0')->update(['id_status'=>$konfirmasi->id]);
+        KeranjangSewa::where('id_user',$user->id)->where('id_status','0')->update(['id_status'=>$konfirmasi->id]);
         $user->saldo = $user->saldo - $total;
         $user->save();
         return redirect('pembeli/')->with('success','Data has been updated');
@@ -74,10 +74,10 @@ class KeranjangBelanjaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Keranjang_belanja  $keranjang_belanja
+     * @param  \App\KeranjangSewa  $KeranjangSewa
      * @return \Illuminate\Http\Response
      */
-    public function show(Keranjang_belanja $keranjang_belanja)
+    public function show(KeranjangSewa $KeranjangSewa)
     {
         //
     }
@@ -85,10 +85,10 @@ class KeranjangBelanjaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Keranjang_belanja  $keranjang_belanja
+     * @param  \App\KeranjangSewa  $KeranjangSewa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Keranjang_belanja $keranjang_belanja)
+    public function edit(KeranjangSewa $KeranjangSewa)
     {
         //
     }
@@ -97,10 +97,10 @@ class KeranjangBelanjaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Keranjang_belanja  $keranjang_belanja
+     * @param  \App\KeranjangSewa  $KeranjangSewa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Keranjang_belanja $keranjang_belanja)
+    public function update(Request $request, KeranjangSewa $KeranjangSewa)
     {
         //
     }
@@ -108,16 +108,16 @@ class KeranjangBelanjaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Keranjang_belanja  $keranjang_belanja
+     * @param  \App\KeranjangSewa  $KeranjangSewa
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $keranjang = Keranjang_belanja::find($id);
+        $keranjang = KeranjangSewa::find($id);
         $list_buku = List_buku::find($keranjang->id_list_buku);
         $list_buku->stok = $list_buku->stok + $keranjang->jumlah;
         $list_buku->save();
         $keranjang->delete();
-        return redirect('pembeli/keranjang')->with('success','Data has been updated');
+        return redirect('pembeli/keranjangsewa')->with('success','Data has been updated');
     }
 }

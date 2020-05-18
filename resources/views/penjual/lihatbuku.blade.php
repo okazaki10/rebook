@@ -104,6 +104,7 @@
               <th>Gambar</th>
               <th>Judul Buku</th>
               <th>Kategori</th>
+              <th>bisa disewa?</th>
               <th>Stok</th>
 
               <th colspan="3" align="center">Action</th>
@@ -115,6 +116,7 @@
               <td><img src="{{asset($list_buku['gambar'])}}" height=100 width=100></td>
               <td>{{$list_buku['judul']}}</td>
               <td>{{$list_buku['kategori']}}</td>
+              <td>{{$list_buku['bisa_disewa'] == '1'?'ya':'tidak'}}</td>
                 <form method="POST" enctype="multipart/form-data" action="{{action('ListBukuController@update',$list_buku['id'])}}">
                   {{csrf_field()}}
                   <input name="_method" type="hidden" value="PATCH">

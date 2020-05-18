@@ -90,10 +90,13 @@
 		</div><br />
 		@endif
       <a href="{{action('PembelianController@index')}}">
-            <button class="btn btn-primary mr-sm-2" type="button">beli buku</button>
+            <button class="btn btn-primary mr-sm-2" type="button">beli/sewa buku</button>
         </a>
         <a href="{{action('KeranjangBelanjaController@index')}}">
             <button class="btn btn-primary mr-sm-2" type="button">keranjang belanja</button>
+        </a>
+        <a href="{{action('KeranjangSewaController@index')}}">
+            <button class="btn btn-primary mr-sm-2" type="button">keranjang sewa</button>
         </a>
         <a href="{{action('TransaksiSaldoController@index')}}">
             <button class="btn btn-primary mr-sm-2" type="button">isi saldo</button>

@@ -121,9 +121,20 @@
       <label>harga</label>
       <input type="number" name="harga" class="form-control">
     </div>
+    <div class="form-group">
+    <label>bisa disewa</label>
+     <select name="bisa_disewa" class="form-control">
+       <option value="1">ya</option>
+       <option value="0">tidak</option>
+     </select>
+    </div>
     <div class="form-group">  
       <label>gambar</label>
       <input type="file" name="gambar" class="form-control">
+    </div>
+    <div class="form-group">  
+      <label>pdf preview</label>
+      <input type="file" name="pdf_preview" class="form-control">
     </div>
 
     <button type="submit" class="btn btn-primary">tambahkan buku</button>

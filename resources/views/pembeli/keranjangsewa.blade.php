@@ -42,9 +42,11 @@
             "><img src="{{asset($user->foto_profil)}}" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
             margin-left: auto;
             margin-right: auto;">
-          {{ $user->nama_lengkap }}</div>
+          {{ $user->nama_lengkap }}
+          </div>
+          saldo {{$user->saldo}}
         <a href="{{url('/')}}" class="list-group-item list-group-item-action">Beranda</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
+        <a href="{{action('KeranjangBelanjaController@index')}}" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Perencanaan Wilayah Kota</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Interior</a>
@@ -99,48 +101,41 @@
 			<p>{{ \Session::get('success') }}</p>
 		</div><br />
 		@endif
-		<form method="post" enctype="multipart/form-data" action="{{action('DetailBukuController@update',$id)}}">
-            {{csrf_field()}}
-            <input name="_method" type="hidden" value="PATCH">
-    <div class="form-group">
-      <label>judul</label>
-      <input type="text" name="judul" class="form-control" value="{{$detail_buku->judul}}">
-    </div>
-    <div class="form-group">
-      <label>kategori</label>
-      <input type="text" name="kategori" class="form-control" value="{{$detail_buku->kategori}}">
-    </div>
-    <div class="form-group">
-      <label>tanggal terbit</label>
-      <input type="date" name="tanggal_terbit" class="form-control" value="{{$detail_buku->tanggal_terbit}}">
-    </div>
-    <div class="form-group">
-      <label>penulis</label>
-      <input type="text" name="penulis" class="form-control" value="{{$detail_buku->penulis}}">
-    </div>
-    <div class="form-group">
-      <label>harga</label>
-      <input type="number" name="harga" class="form-control" value="{{$detail_buku->harga}}">
-    </div>
-    <div class="form-group">
-    <label>bisa disewa</label>
-     <select name="bisa_disewa" class="form-control">
-       <option value="1" {{$detail_buku->bisa_disewa == 1?'selected':''}}>ya</option>
-       <option value="0" {{$detail_buku->bisa_disewa == 0?'selected':''}}>tidak</option>
-     </select>
-    </div>
-    <div class="form-group">  
-      <label>gambar</label>
-      <input type="file" name="gambar" class="form-control">
-    </div>
-    <div class="form-group">  
-      <label>pdf preview</label>
-      <input type="file" name="pdf_preview" class="form-control">
-    </div>
+		<table class="table table-striped">
+<thead>
+<tr>
+<th>Gambar</th>
+<th>Judul Buku</th>
+<th>Jumlah</th>
+<th>Harga</th>
 
-    <button type="submit" class="btn btn-primary">tambahkan buku</button>
-  </form>
+<th colspan="3" align="center">Action</th>
+</tr>
+</thead>
+<tbody>
 
+@foreach($keranjangs as $keranjang)
+<tr>
+<td><img src="{{asset($keranjang['gambar'])}}" height=100 width=100></td>
+<td>{{$keranjang['judul']}}</td>
+<td>{{$keranjang['jumlah']}}</td>
+<td>{{$keranjang['harga']}}</td>
+<td>
+<form action="{{action('KeranjangSewaController@destroy',
+$keranjang['id'])}}" method="post">
+{{csrf_field()}}
+<input name="_method" type="hidden" value="DELETE">
+<button class="btn btn-danger" type="submit">Hapus</button>
+</form>
+</td>
+@endforeach
+</table>
+@if($total>0)
+total {{$total}}
+<form action="{{action('KeranjangSewaController@store')}}" method="post">
+{{csrf_field()}}
+<button class="btn btn-success" type="submit">Beli</button>
+@endif
     </div>
 
 
@@ -148,6 +143,7 @@
 
 
   </div>
+  
   <!-- /#page-content-wrapper -->
 
   </div>
@@ -170,3 +166,5 @@
   </body>
 
   </html>
+  <div>
+

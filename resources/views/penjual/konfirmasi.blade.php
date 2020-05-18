@@ -109,6 +109,7 @@
 <th>Nomor hp</th>
 <th>Tanggal mulai</th>
 <th>Tanggal selesai</th>
+<th>Tipe</th>
 <th>status</th>
 <th colspan="3" align="center">Action</th>
 </tr>
@@ -122,16 +123,25 @@
 <td>{{$konfirmasi['no_hp']}}</td>
 <td>{{$konfirmasi['tanggal_mulai']}}</td>
 <td>{{$konfirmasi['tanggal_selesai'] == '2001-01-01'?'-':$konfirmasi['tanggal_selesai']}}</td>
+<td>{{$konfirmasi['bisa_disewa'] == 1?'sewa':'beli'}}</td>
 @if($konfirmasi['status'] == '0')
+@if($konfirmasi['bisa_disewa'] == 0)
 <td>belum dikirim</td>
 <td><a href="{{action('StatusKonfirmasiController@edit', $konfirmasi['id'])}}"
 class="btn btn-warning">Lihat</a></td>
+@else
+<td>belum dikirim</td>
+<td><a href="{{action('StatusKonfirmasiController@edit', 'sewa-'.$konfirmasi['id'])}}"
+class="btn btn-warning">Lihat</a></td>
+@endif
 @elseif($konfirmasi['status'] == '1')
 <td>sudah dikirim</td>
 @elseif($konfirmasi['status'] == '2')
 <td>sudah sampai</td>
 @elseif($konfirmasi['status'] == '3')
 <td>batal</td>
+@elseif($konfirmasi['status'] == '4')
+<td>sudah dikembalikan</td>
 @endif
 
 @endforeach

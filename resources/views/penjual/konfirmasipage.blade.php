@@ -130,7 +130,9 @@ tanggal mulai {{$konfirmasis[0]['tanggal_mulai']}}
 <form method="POST" enctype="multipart/form-data" action="{{action('StatusKonfirmasiController@update',$id)}}">
 			{{csrf_field()}}
             <input name="_method" type="hidden" value="PATCH">
-    
+ 
+    <input name="sewa" type="hidden" value="{{$sewa}}">
+  
     <button type="submit" name="status" value="1" class="btn btn-primary">kirim</button>
     <button type="submit" name="status" value="3" class="btn btn-primary">batal</button>
   </form>

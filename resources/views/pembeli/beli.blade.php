@@ -125,20 +125,27 @@
     <label>harga</label>
     <p>{{$list_buku->harga}}</p>
     </div>
-   
+    
     </div>
 		<form method="POST" enctype="multipart/form-data" action="{{action('PembelianController@store')}}">
 			{{csrf_field()}}
             <input type="hidden" name="id_penjual" value="{{$list_buku->id_penjual}}" class="form-control">
             <input type="hidden" name="id_list_buku" value="{{$id}}"class="form-control">
             <div class="form-group">
-      <label>beli jumlah</label>
+      <label>beli/sewa jumlah</label>
       <input type="text" name="jumlah" class="form-control">
     </div>
-    <button type="submit" class="btn btn-primary">beli</button>
+    <button type="submit" name="bisa_disewa" value="0" class="btn btn-primary">beli</button>
+    @if($list_buku->bisa_disewa == 1)
+    <button type="submit" name="bisa_disewa" value="1" class="btn btn-success">sewa</button>
+    @endif
   </form>
   <a href="{{action('ChatController@show', $list_buku->id_penjual)}}"
-class="btn btn-warning">Chat penjual</a>
+class="btn btn-warning">Chat penjual</a><br>
+@if($list_buku->pdf_preview != '')
+<a href="{{asset($list_buku->pdf_preview)}}"
+class="btn btn-warning">download pdf preview</a>
+@endif
     </div>
 
 

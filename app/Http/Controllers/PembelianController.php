@@ -10,6 +10,7 @@ use DB;
 use App\Detail_buku;
 use App\List_buku;
 use App\Keranjang_belanja;
+use App\KeranjangSewa;
 
 class PembelianController extends Controller
 {
@@ -21,25 +22,35 @@ class PembelianController extends Controller
     public function index()
     {
         $user = Helper::auth(Session::get('email'), Session::get('password'));
-        $list_bukus = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'detail_buku.harga', 'detail_buku.kategori')->paginate(2);
+        $list_bukus = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'detail_buku.harga', 'detail_buku.kategori', 'detail_buku.bisa_disewa')->paginate(5);
         return view('pembeli.pembelian', compact('user', 'list_bukus'));
     }
 
     public function cari(Request $request)
     {
-        if($request->type != null){
-        Session::put('type',$request->type);
+        if ($request->type != null) {
+            Session::put('type', $request->type);
+            Session::put('sewa', $request->sewa);
         }
         $user = Helper::auth(Session::get('email'), Session::get('password'));
         $detail_buku = '';
-        if(Session::get('type') == "judul"){
+        if (Session::get('type') == "judul") {
             $detail_buku = 'detail_buku.judul';
-        }else if(Session::get('type') == "kategori"){
+        } else if (Session::get('type') == "kategori") {
             $detail_buku = 'detail_buku.kategori';
-        }else if(Session::get('type') == "penulis"){
+        } else if (Session::get('type') == "penulis") {
             $detail_buku = 'detail_buku.penulis';
         }
-        $list_bukus = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'detail_buku.harga', 'detail_buku.kategori')->where($detail_buku, 'like', '%' . $request->pencarian . '%')->paginate(2);
+        if (Session::get('sewa') == "1") {
+            $list_bukus = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'detail_buku.harga', 'detail_buku.kategori', 'detail_buku.bisa_disewa')
+                ->where($detail_buku, 'like', '%' . $request->pencarian . '%')
+                ->where('detail_buku.bisa_disewa','1')
+                ->paginate(5);
+        } else {
+            $list_bukus = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'detail_buku.harga', 'detail_buku.kategori', 'detail_buku.bisa_disewa')
+                ->where($detail_buku, 'like', '%' . $request->pencarian . '%')
+                ->paginate(5);
+        }
         return view('pembeli.pembelian', compact('user', 'list_bukus'));
     }
 
@@ -64,7 +75,8 @@ class PembelianController extends Controller
         $this->validate(request(), [
             'id_penjual' => 'required',
             'id_list_buku' => 'required',
-            'jumlah' => 'required|numeric|min:1'
+            'jumlah' => 'required|numeric|min:1',
+            'bisa_disewa' => 'required'
         ]);
         $id_list_buku = $request->get('id_list_buku');
         $list_buku = List_buku::find($id_list_buku);
@@ -74,7 +86,11 @@ class PembelianController extends Controller
         if ($list_buku->stok >= $jumlah) {
             $list_buku->stok = $list_buku->stok - $jumlah;
             $list_buku->save();
+            if($request->get('bisa_disewa') == 1){
+            $keranjang = new Keranjangsewa;
+            }else{
             $keranjang = new Keranjang_belanja;
+            }
             $user = Helper::auth(Session::get('email'), Session::get('password'));
             $keranjang->id_user = $user->id;
             $keranjang->id_penjual = $request->get('id_penjual');
@@ -83,7 +99,7 @@ class PembelianController extends Controller
             $keranjang->harga = $harga;
             $keranjang->id_status = '0';
             $keranjang->save();
-            return redirect('pembeli/pembelian')->with('success', 'Data has been updated');
+            return redirect('pembeli/pembelian')->with('success', 'buku sudah masuk ke keranjang');
         } else {
             return redirect('pembeli/pembelian')->with('success', 'jumlah melebihi stok');
         }
@@ -97,10 +113,12 @@ class PembelianController extends Controller
      */
     public function show($id)
     {
-        $list_buku = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->join('user', 'list_buku.id_penjual', '=', 'user.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'user.nama_lengkap', 'user.alamat', 'detail_buku.harga', 'detail_buku.kategori')->where('list_buku.id', $id)->first();
+        $list_buku = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->join('user', 'list_buku.id_penjual', '=', 'user.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'user.nama_lengkap', 'user.alamat', 'detail_buku.harga', 'detail_buku.kategori','detail_buku.bisa_disewa','detail_buku.pdf_preview')->where('list_buku.id', $id)->first();
         $user = Helper::auth(Session::get('email'), Session::get('password'));
         return view('pembeli.beli', compact('user', 'id', 'list_buku'));
     }
+
+
 
     /**
      * Show the form for editing the specified resource.

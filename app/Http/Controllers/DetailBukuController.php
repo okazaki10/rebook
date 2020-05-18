@@ -18,9 +18,9 @@ class DetailBukuController extends Controller
      */
     public function index()
     {
-        $user = Helper::auth(Session::get('email'),Session::get('password'));
-        $detail_bukus = Detail_buku::where('id_penjual',$user->id)->paginate(5);
-        return view('penjual.lihatbukubaru',compact('detail_bukus','user'));
+        $user = Helper::auth(Session::get('email'), Session::get('password'));
+        $detail_bukus = Detail_buku::where('id_penjual', $user->id)->paginate(5);
+        return view('penjual.lihatbukubaru', compact('detail_bukus', 'user'));
     }
 
     /**
@@ -30,8 +30,8 @@ class DetailBukuController extends Controller
      */
     public function create()
     {
-        $user = Helper::auth(Session::get('email'),Session::get('password'));
-        return view('penjual.buku',compact('user'));
+        $user = Helper::auth(Session::get('email'), Session::get('password'));
+        return view('penjual.buku', compact('user'));
     }
 
     /**
@@ -49,24 +49,33 @@ class DetailBukuController extends Controller
             'tanggal_terbit' => 'required',
             'penulis' => 'required',
             'harga' => 'required|numeric',
-            'gambar' => 'nullable'
+            'gambar' => 'nullable',
+            'bisa_disewa' => 'nullable'
         ]);
-        $user = Helper::auth(Session::get('email'),Session::get('password'));
+        $user = Helper::auth(Session::get('email'), Session::get('password'));
         $detail_buku->id_penjual = $user->id;
         $detail_buku->judul = $request->get('judul');
         $detail_buku->kategori = $request->get('kategori');
         $detail_buku->tanggal_terbit = $request->get('tanggal_terbit');
         $detail_buku->penulis = $request->get('penulis');
-        $detail_buku->harga = $request->get('harga');     
-        if($request->hasFile('gambar')){
-        $path = $request->file('gambar')->store('public/detail_buku');
-        $path2 = str_replace("public","storage",$path);
-        $detail_buku->gambar = $path2;
-        }else{
+        $detail_buku->harga = $request->get('harga');
+        $detail_buku->bisa_disewa = $request->get('bisa_disewa');
+        if ($request->hasFile('gambar')) {
+            $path = $request->file('gambar')->store('public/detail_buku');
+            $path2 = str_replace("public", "storage", $path);
+            $detail_buku->gambar = $path2;
+        } else {
             $detail_buku->gambar = "storage/no_image.jpg";
         }
+        if ($request->hasFile('pdf_preview')) {
+            $path = $request->file('pdf_preview')->store('public/pdf_preview');
+            $path2 = str_replace("public", "storage", $path);
+            $detail_buku->pdf_preview = $path2;
+        } else {
+            $detail_buku->pdf_preview = "";
+        }
         $detail_buku->save();
-        return redirect('penjual/')->with('success','Data has been updated');
+        return redirect('penjual/')->with('success', 'Data has been updated');
     }
 
     /**
@@ -88,9 +97,9 @@ class DetailBukuController extends Controller
      */
     public function edit($id)
     {
-        $user = Helper::auth(Session::get('email'),Session::get('password'));
+        $user = Helper::auth(Session::get('email'), Session::get('password'));
         $detail_buku = Detail_buku::find($id);
-        return view('penjual.ubahbukubaru',compact('detail_buku','id','user'));
+        return view('penjual.ubahbukubaru', compact('detail_buku', 'id', 'user'));
     }
 
     /**
@@ -109,22 +118,29 @@ class DetailBukuController extends Controller
             'tanggal_terbit' => 'required',
             'penulis' => 'required',
             'harga' => 'required|numeric',
-            'gambar' => 'nullable'
+            'gambar' => 'nullable',
+            'bisa_disewa' => 'nullable'
         ]);
-        $user = Helper::auth(Session::get('email'),Session::get('password'));
+        $user = Helper::auth(Session::get('email'), Session::get('password'));
         $detail_buku->id_penjual = $user->id;
         $detail_buku->judul = $request->get('judul');
         $detail_buku->kategori = $request->get('kategori');
         $detail_buku->tanggal_terbit = $request->get('tanggal_terbit');
         $detail_buku->penulis = $request->get('penulis');
-        $detail_buku->harga = $request->get('harga');     
-        if($request->hasFile('gambar')){
-        $path = $request->file('gambar')->store('public/detail_buku');
-        $path2 = str_replace("public","storage",$path);
-        $detail_buku->gambar = $path2;
+        $detail_buku->harga = $request->get('harga');
+        $detail_buku->bisa_disewa = $request->get('bisa_disewa');
+        if ($request->hasFile('gambar')) {
+            $path = $request->file('gambar')->store('public/detail_buku');
+            $path2 = str_replace("public", "storage", $path);
+            $detail_buku->gambar = $path2;
+        }
+        if ($request->hasFile('pdf_preview')) {
+            $path = $request->file('pdf_preview')->store('public/pdf_preview');
+            $path2 = str_replace("public", "storage", $path);
+            $detail_buku->pdf_preview = $path2;
         }
         $detail_buku->save();
-        return redirect('penjual/')->with('success','Data has been updated');
+        return redirect('penjual/')->with('success', 'Data has been updated');
     }
 
     /**
@@ -137,8 +153,6 @@ class DetailBukuController extends Controller
     {
         $detail_buku = Detail_buku::find($id);
         $detail_buku->delete();
-        return redirect('penjual/penjualan')->with('success','Data has been updated');
+        return redirect('penjual/penjualan')->with('success', 'Data has been updated');
     }
-
-    
 }

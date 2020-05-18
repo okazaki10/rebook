@@ -35,6 +35,7 @@ Route::middleware('pembeli')->group(function () {
     Route::resource('pembeli/pembelian', 'PembelianController');
     Route::resource('pembeli/profile', 'ProfilePembeliController');
     Route::resource('pembeli/keranjang', 'KeranjangBelanjaController');
+    Route::resource('pembeli/keranjangsewa', 'KeranjangSewaController');
     Route::resource('pembeli/isisaldo', 'TransaksiSaldoController');
     Route::resource('pembeli/konfirmasi', 'StatusPengirimanController');
     Route::resource('pembeli/chat', 'ChatController');

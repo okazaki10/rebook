@@ -107,7 +107,8 @@
 <th>Nama penjual</th>
 <th>Tanggal mulai</th>
 <th>Tanggal selesai</th>
-<th>status</th>
+<th>Tipe</th>
+<th>Status</th>
 <th colspan="3" align="center">Action</th>
 </tr>
 </thead>
@@ -118,18 +119,25 @@
 <td>{{$konfirmasi['nama_lengkap']}}</td>
 <td>{{$konfirmasi['tanggal_mulai']}}</td>
 <td>{{$konfirmasi['tanggal_selesai'] == '2001-01-01'?'-':$konfirmasi['tanggal_selesai']}}</td>
+<td>{{$konfirmasi['bisa_disewa'] == 1?'sewa':'beli'}}</td>
 @if($konfirmasi['status'] == '0')
 <td>belum dikirim</td>
 @elseif($konfirmasi['status'] == '1')
 <td>sudah dikirim</td>
-
 @elseif($konfirmasi['status'] == '2')
 <td>sudah sampai</td>
 @elseif($konfirmasi['status'] == '3')
 <td>batal</td>
+@elseif($konfirmasi['status'] == '4')
+<td>sudah dikembalikan</td>
 @endif
+@if($konfirmasi['bisa_disewa'] == 0)
 <td><a href="{{action('StatusPengirimanController@edit', $konfirmasi['id'])}}"
 class="btn btn-warning">Lihat</a></td>
+@else
+<td><a href="{{action('StatusPengirimanController@edit', 'sewa-'.$konfirmasi['id'])}}"
+class="btn btn-warning">Lihat</a></td>
+@endif
 @endforeach
 </table>
 
