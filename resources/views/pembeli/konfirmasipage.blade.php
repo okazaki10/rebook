@@ -41,9 +41,11 @@
             "><img src="{{asset($user->foto_profil)}}" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
             margin-left: auto;
             margin-right: auto;">
-          {{ $user->nama_lengkap }}</div>
+          {{ $user->nama_lengkap }}
+        </div>
+        saldo {{$user->saldo}}
         <a href="{{url('/')}}" class="list-group-item list-group-item-action">Beranda</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
+        <a href="{{action('KeranjangBelanjaController@index')}}" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Perencanaan Wilayah Kota</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Interior</a>
@@ -98,44 +100,37 @@
           <p>{{ \Session::get('success') }}</p>
         </div><br />
         @endif
+
+
         <table class="table table-striped">
           <thead>
             <tr>
               <th>Gambar</th>
               <th>Judul Buku</th>
-              <th>Kategori</th>
-              <th>Stok</th>
+              <th>Jumlah</th>
+              <th>Harga</th>
 
-              <th colspan="3" align="center">Action</th>
             </tr>
           </thead>
           <tbody>
-            @foreach($list_bukus as $list_buku)
-            <tr>
-              <td><img src="{{asset($list_buku['gambar'])}}" height=100 width=100></td>
-              <td>{{$list_buku['judul']}}</td>
-              <td>{{$list_buku['kategori']}}</td>
-                <form method="POST" enctype="multipart/form-data" action="{{action('ListBukuController@update',$list_buku['id'])}}">
-                  {{csrf_field()}}
-                  <input name="_method" type="hidden" value="PATCH">
-                  <td>
-                    <input type="number" name="stok" value="{{$list_buku['stok']}}" class="form-control">
-                  </td>
-                  <td>
 
-                  <button type="submit" class="btn btn-primary">update stok</button>
-                </form>
-              </td>
-      
-              <td>
-                <form action="{{action('ListBukuController@destroy',
-$list_buku['id'])}}" method="post">
-                  {{csrf_field()}}
-                  <input name="_method" type="hidden" value="DELETE">
-                  <button class="btn btn-danger" type="submit">Hapus</button>
-                </form>
-              </td>
+            @foreach($konfirmasis as $konfirmasi)
+            <tr>
+              <td><img src="{{asset($konfirmasi['gambar'])}}" height=100 width=100></td>
+              <td>{{$konfirmasi['judul']}}</td>
+              <td>{{$konfirmasi['jumlah']}}</td>
+              <td>{{$konfirmasi['harga']}}</td>
               @endforeach
+        </table>
+        <form method="POST" enctype="multipart/form-data" action="{{action('StatusPengirimanController@update',$id)}}">
+          {{csrf_field()}}
+          <input name="_method" type="hidden" value="PATCH">
+         
+          @if($konfirmasis[0]['status'] == '1')
+          <button type="submit" name="status" value="2" class="btn btn-primary">konfirmasi barang sudah sampai</button>
+          @endif
+         
+        </form>
       </div>
 
 
@@ -143,6 +138,7 @@ $list_buku['id'])}}" method="post">
 
 
     </div>
+
     <!-- /#page-content-wrapper -->
 
   </div>

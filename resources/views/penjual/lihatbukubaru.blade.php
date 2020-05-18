@@ -104,40 +104,47 @@
               <th>Gambar</th>
               <th>Judul Buku</th>
               <th>Kategori</th>
-              <th>Stok</th>
-
+              <th>Tanggal terbit</th>
+              <th>Penulis</th>
+              <th>Harga</th>
+              <th>Isi Stok</th>
               <th colspan="3" align="center">Action</th>
             </tr>
           </thead>
           <tbody>
-            @foreach($list_bukus as $list_buku)
+            @foreach($detail_bukus as $detail_buku)
             <tr>
-              <td><img src="{{asset($list_buku['gambar'])}}" height=100 width=100></td>
-              <td>{{$list_buku['judul']}}</td>
-              <td>{{$list_buku['kategori']}}</td>
-                <form method="POST" enctype="multipart/form-data" action="{{action('ListBukuController@update',$list_buku['id'])}}">
-                  {{csrf_field()}}
-                  <input name="_method" type="hidden" value="PATCH">
-                  <td>
-                    <input type="number" name="stok" value="{{$list_buku['stok']}}" class="form-control">
-                  </td>
-                  <td>
-
-                  <button type="submit" class="btn btn-primary">update stok</button>
-                </form>
-              </td>
-      
+              <td><img src="{{asset($detail_buku['gambar'])}}" height=100 width=100></td>
+              <td>{{$detail_buku['judul']}}</td>
+              <td>{{$detail_buku['kategori']}}</td>
+              <td>{{$detail_buku['tanggal_terbit']}}</td>
+              <td>{{$detail_buku['penulis']}}</td>
+              <td>{{$detail_buku['harga']}}</td>
+              <form method="post" enctype="multipart/form-data" action="{{action('ListBukuController@store')}}">
+                {{csrf_field()}}
+                <td>
+                <input type="hidden" name="id_buku" class="form-control" value="{{$detail_buku['id']}}">
+                  <input type="number" name="stok" class="form-control">
+                </td>
+                <td>
+                  <button type="submit" class="btn btn-primary">jual buku</button>
+                </td>
+              </form>
+              <td><a href="{{action('DetailBukuController@edit', $detail_buku['id'])}}" class="btn btn-warning">Ubah</a></td>
               <td>
-                <form action="{{action('ListBukuController@destroy',
-$list_buku['id'])}}" method="post">
+                <form action="{{action('DetailBukuController@destroy',
+$detail_buku['id'])}}" method="post">
                   {{csrf_field()}}
                   <input name="_method" type="hidden" value="DELETE">
                   <button class="btn btn-danger" type="submit">Hapus</button>
                 </form>
               </td>
-              @endforeach
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
       </div>
-
+      {{$detail_bukus->links()}}
 
 
 

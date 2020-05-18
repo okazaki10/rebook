@@ -33,16 +33,16 @@
       <!-- Sidebar -->
       <div class="bg-light" id="sidebar-wrapper" style="position: fixed;z-index: 1000;" >
 
-        <div class="list-group list-group-flush">
+      <div class="list-group list-group-flush">
           
-            <div class="sidebar-heading bg-dark text-light " style="
+            <a href="{{action('ProfilePenjualController@index')}}"><div class="sidebar-heading bg-dark text-light " style="
             padding-top: 60px;
             text-align: center;
 
             "><img src="{{asset($user->foto_profil)}}" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
             margin-left: auto;
             margin-right: auto;">
-          {{ $user->nama_lengkap}}</div>
+          {{ $user->nama_lengkap }}</div>
         <a href="{{url('/')}}" class="list-group-item list-group-item-action">Beranda</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
@@ -66,25 +66,25 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
           
-                <div class="form-inline">
-                  <input class="form-control mr-sm-2" type="text" placeholder="NRP" aria-label="Search" id="nrp">
-                  <input class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Search" id="password">
-                  <button class="btn btn-success mr-sm-2">Login</button>
-                  
-                </div>
-            <a href="{{action('DaftarController@logout')}}">
-              <button class="btn btn-primary mr-sm-2" type="button">Logout</button>
-            </a>
+          <div class="form-inline">
+            <input class="form-control mr-sm-2" type="text" placeholder="NRP" aria-label="Search" id="nrp">
+            <input class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Search" id="password">
+            <button class="btn btn-success mr-sm-2">Login</button>
+            
+          </div>
+      <a href="{{action('DaftarController@logout')}}">
+        <button class="btn btn-primary mr-sm-2" type="button">Logout</button>
+      </a>
 
-          </ul>
+    </ul>
         </div>
       </nav>
       
       <div id="containerfluid" class="container-fluid">
  
-        <h2 class="mt-4">Tambahkan Buku</h2>
+        <h2 class="mt-4">Daftar</h2>
 		@if ($errors->any())
 		<div class="alert alert-danger">
 			<ul>
@@ -94,29 +94,67 @@
 			</ul>
 		</div><br />
 		@endif
-		@if (\Session::has('success'))
-		<div class="alert alert-success">
-			<p>{{ \Session::get('success') }}</p>
+		@if (\Session::has('failed'))
+		<div class="alert alert-danger">
+			<p>{{ \Session::get('failed') }}</p>
 		</div><br />
 		@endif
-		<form method="POST" enctype="multipart/form-data" action="{{action('ListBukuController@update',$id)}}">
+		<form enctype="multipart/form-data" method="post" action="{{action('ProfilePenjualController@store')}}">
 			{{csrf_field()}}
-            <input name="_method" type="hidden" value="PATCH">
-      <div class="form-group">
-    <label>judul buku</label>
-    <select name="id_buku" class="form-control">
-    @foreach($detail_bukus as $detail_buku)
-    <option value="{{$detail_buku['id']}}" {{$list_buku->id_buku == $detail_buku['id'] ? 'selected' : ''}}>{{$detail_buku['judul']}}</option>
-    @endforeach
-    </select>
+    <div class="form-group">
+      <label>email</label>
+      <input type="text" name="email" class="form-control" value="{{$daftar->email}}">
     </div>
     <div class="form-group">
-      <label>stok</label>
-      <input type="text" name="stok" value="{{$list_buku->stok}}" class="form-control">
+      <label>password</label>
+      <input type="password" name="password" class="form-control" value="{{$daftar->password}}">
     </div>
-    
-    <button type="submit" class="btn btn-primary">tambahkan buku</button>
+    <div class="form-group">
+      <label>konfirmasi password</label>
+      <input type="password" name="konfirmasi_password" class="form-control" value="{{$daftar->password}}">
+    </div>
+    <div class="form-group">
+      <label>Nama Lengkap</label>
+      <input type="text" name="nama_lengkap" class="form-control" value="{{$daftar->nama_lengkap}}">
+    </div>
+    <div class="form-group">
+      <label>Alamat</label>
+      <input type="text" name="alamat" class="form-control" value="{{$daftar->alamat}}">
+    </div>
+    <div class="form-group">
+      <label>Tanggal Lahir</label>
+      <input type="date" name="tanggal_lahir" class="form-control" value="{{$daftar->tanggal_lahir}}">
+    </div>
+	<div class="form-group">
+      <label>no hp</label>
+      <input type="number" name="no_hp" class="form-control" value="{{$daftar->no_hp}}">
+    </div>
+    <div class="form-group">
+      <label>status</label>
+     
+       <p>{{$daftar->status == 1 ? 'pembeli' : ''}}
+    {{$daftar->status == 2 ? 'penjual' : ''}}
+    {{$daftar->status == 3 ? 'admin' : ''}}</p>
+     
+    </div>
+    <div class="form-group">
+      <label>foto profil</label>
+      <input type="file" name="foto_profil" class="form-control">
+    </div>
+	<!--
+    <div class="form-group">
+      <label>Foto Profil</label>
+      <p><img src="foto_profil/none.jpg" height="100" width="100"></p>
+      <div class="custom-file">
+      <input type="file" class="custom-file-input" id="customFile">
+      <label class="custom-file-label" for="customFile">Choose file</label>
+      </div>
+    </div>
+	!-->
+
+    <button type="submit" class="btn btn-primary">Daftar</button>
   </form>
+
     </div>
 
 
@@ -146,5 +184,3 @@
   </body>
 
   </html>
-  <div>
-

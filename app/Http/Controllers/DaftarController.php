@@ -37,7 +37,7 @@ class DaftarController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
-            'email' => 'required|min:8',
+            'email' => 'required|min:4',
             'password' => 'required|min:4',
             'konfirmasi_password' => 'required',
             'nama_lengkap' => 'required',
@@ -83,7 +83,7 @@ class DaftarController extends Controller
                 return redirect('penjual/');
             }
         } else {
-            return redirect('/');
+            return redirect('/')->with('success','username atau password salah');
         }
     }
 

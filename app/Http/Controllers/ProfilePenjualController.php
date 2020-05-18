@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\ProfilePembeli;
+use App\ProfilePenjual;
 use Illuminate\Http\Request;
 use App\Helper\Helper;
 use DB;
 use App\Daftar;
 use Session;
-class ProfilePembeliController extends Controller
+class ProfilePenjualController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class ProfilePembeliController extends Controller
     {
         $user = Helper::auth(Session::get('email'), Session::get('password'));
         $daftar = Daftar::find($user->id);
-        return view('pembeli.profile',compact('user','daftar'));
+        return view('penjual.profile',compact('user','daftar'));
     }
 
     /**
@@ -67,9 +67,9 @@ class ProfilePembeliController extends Controller
             $daftar->save();
             Session::put('email', $daftar->email);
             Session::put('password', $daftar->password);
-            return redirect('pembeli');
+            return redirect('penjual');
         } else {
-            return redirect('pembeli/profile')->with('failed', 'konfirmasi password tidak sama');
+            return redirect('penjual/profile')->with('failed', 'konfirmasi password tidak sama');
         }
     }
 

@@ -101,6 +101,9 @@
         <a href="{{action('ChatController@index')}}">
             <button class="btn btn-primary mr-sm-2" type="button">chat penjual</button>
         </a>
+        <a href="{{action('StatusPengirimanController@index')}}">
+            <button class="btn btn-primary mr-sm-2" type="button">cek status pengiriman</button>
+        </a>
     </div>
 
 

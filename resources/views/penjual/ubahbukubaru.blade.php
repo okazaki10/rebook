@@ -35,14 +35,14 @@
 
         <div class="list-group list-group-flush">
           
-        <a href="{{action('ProfilePenjualController@index')}}"><div class="sidebar-heading bg-dark text-light " style="
+            <div class="sidebar-heading bg-dark text-light " style="
             padding-top: 60px;
             text-align: center;
 
             "><img src="{{asset($user->foto_profil)}}" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
             margin-left: auto;
             margin-right: auto;">
-          {{ $user->nama_lengkap }}</div></a>
+          {{ $user->nama_lengkap }}</div>
         <a href="{{url('/')}}" class="list-group-item list-group-item-action">Beranda</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
@@ -83,32 +83,53 @@
       </nav>
       
       <div id="containerfluid" class="container-fluid">
-      <h2 class="mt-4">Penjual</h2>
-      @if (\Session::has('success'))
+ 
+        <h2 class="mt-4">Tambahkan Buku</h2>
+		@if ($errors->any())
+		<div class="alert alert-danger">
+			<ul>
+				@foreach ($errors->all() as $error)
+				<li>{{ $error }}</li>
+				@endforeach
+			</ul>
+		</div><br />
+		@endif
+		@if (\Session::has('success'))
 		<div class="alert alert-success">
 			<p>{{ \Session::get('success') }}</p>
 		</div><br />
 		@endif
-      <a href="{{action('DetailBukuController@create')}}">
-            <button class="btn btn-primary mr-sm-2" type="button">tambahkan buku</button>
-        </a>
-        <a href="{{action('DetailBukuController@index')}}">
-            <button class="btn btn-primary mr-sm-2" type="button">lihat buku</button>
-        </a>
-        <a href="{{action('ListBukuController@index')}}">
-            <button class="btn btn-primary mr-sm-2" type="button">lihat buku yang dijual</button>
-        </a>
-        <a href="{{action('StatusKonfirmasiController@index')}}">
-            <button class="btn btn-primary mr-sm-2" type="button">konfirmasi transaksi</button>
-        </a>
-        <a href="{{action('ChatPenjualController@index')}}">
-            <button class="btn btn-primary mr-sm-2" type="button">chat pembeli</button>
-        </a>
-        @if($user->status == '3')
-        <a href="{{action('KonfirmasiSaldoController@index')}}">
-            <button class="btn btn-primary mr-sm-2" type="button">konfirmasi saldo</button>
-        </a>
-        @endif
+		<form method="post" enctype="multipart/form-data" action="{{action('DetailBukuController@update',$id)}}">
+            {{csrf_field()}}
+            <input name="_method" type="hidden" value="PATCH">
+    <div class="form-group">
+      <label>judul</label>
+      <input type="text" name="judul" class="form-control" value="{{$detail_buku->judul}}">
+    </div>
+    <div class="form-group">
+      <label>kategori</label>
+      <input type="text" name="kategori" class="form-control" value="{{$detail_buku->kategori}}">
+    </div>
+    <div class="form-group">
+      <label>tanggal terbit</label>
+      <input type="date" name="tanggal_terbit" class="form-control" value="{{$detail_buku->tanggal_terbit}}">
+    </div>
+    <div class="form-group">
+      <label>penulis</label>
+      <input type="text" name="penulis" class="form-control" value="{{$detail_buku->penulis}}">
+    </div>
+    <div class="form-group">
+      <label>harga</label>
+      <input type="number" name="harga" class="form-control" value="{{$detail_buku->harga}}">
+    </div>
+    <div class="form-group">  
+      <label>gambar</label>
+      <input type="file" name="gambar" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">tambahkan buku</button>
+  </form>
+
     </div>
 
 

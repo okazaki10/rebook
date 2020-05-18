@@ -42,9 +42,11 @@
             "><img src="{{asset($user->foto_profil)}}" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
             margin-left: auto;
             margin-right: auto;">
-          {{ $user->nama_lengkap}}</div>
+          {{ $user->nama_lengkap }}
+          </div>
+          saldo {{$user->saldo}}
         <a href="{{url('/')}}" class="list-group-item list-group-item-action">Beranda</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
+        <a href="{{action('KeranjangBelanjaController@index')}}" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Perencanaan Wilayah Kota</a>
         <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Interior</a>
@@ -99,24 +101,38 @@
 			<p>{{ \Session::get('success') }}</p>
 		</div><br />
 		@endif
-		<form method="post" enctype="multipart/form-data" action="{{action('ListBukuController@store')}}">
-			{{csrf_field()}}
-      <div class="form-group">
-    <label>judul buku</label>
-    <select name="id_buku" class="form-control">
-    @foreach($detail_bukus as $detail_buku)
-    <option value="{{$detail_buku['id']}}">{{$detail_buku['judul']}}</option>
-    @endforeach
-    </select>
-    </div>
-    <div class="form-group">
-      <label>stok</label>
-      <input type="text" name="stok" class="form-control">
-    </div>
-    
-    <button type="submit" class="btn btn-primary">tambahkan buku</button>
-  </form>
-  
+		<table class="table table-striped">
+<thead>
+<tr>
+<th>Nama penjual</th>
+<th>Tanggal mulai</th>
+<th>Tanggal selesai</th>
+<th>status</th>
+<th colspan="3" align="center">Action</th>
+</tr>
+</thead>
+<tbody>
+
+@foreach($konfirmasis as $konfirmasi)
+<tr>
+<td>{{$konfirmasi['nama_lengkap']}}</td>
+<td>{{$konfirmasi['tanggal_mulai']}}</td>
+<td>{{$konfirmasi['tanggal_selesai'] == '2001-01-01'?'-':$konfirmasi['tanggal_selesai']}}</td>
+@if($konfirmasi['status'] == '0')
+<td>belum dikirim</td>
+@elseif($konfirmasi['status'] == '1')
+<td>sudah dikirim</td>
+
+@elseif($konfirmasi['status'] == '2')
+<td>sudah sampai</td>
+@elseif($konfirmasi['status'] == '3')
+<td>batal</td>
+@endif
+<td><a href="{{action('StatusPengirimanController@edit', $konfirmasi['id'])}}"
+class="btn btn-warning">Lihat</a></td>
+@endforeach
+</table>
+
     </div>
 
 
@@ -124,6 +140,7 @@
 
 
   </div>
+  
   <!-- /#page-content-wrapper -->
 
   </div>

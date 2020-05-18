@@ -81,7 +81,7 @@
                 <button type="submit" class="btn btn-success mr-sm-2">Login</button>
                 </form>
                 
-              </div>
+              </div>  
           <a href="{{action('DaftarController@create')}}">
             <button class="btn btn-primary mr-sm-2" type="button">Daftar</button>
           </a>
@@ -91,28 +91,22 @@
     </nav>
     
     <div id="containerfluid" class="container-fluid">
-      <h1 class="mt-4" style="font-weight: bold;">Fakultas Arsitektur Desain dan Perencanaan</h1>
-      <h2 class="mt-4">Arsitektur</h2>
-      <p>Hot Items</p>
-      <div id="products" class="row view-group">
-        <div class="item col-xs-4 col-lg-4" style="flex:0 0 15%;">
-          <a href="barang.html" class="thumbnail card" style="padding-top: 15px;text-decoration: none;">
-          <div class="block">
-            <img src="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/medium//99/MTA-2857671/dulux_dulux-catylac-eksterior-tinting-cat-tembok---super-white--20-l--_full02.jpg" width="100" height="100">
-          </div>
-          <div class="caption card-body" style="padding-left: 5px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;">
-          <h4 class="namabarang">
-          jual cat kualitas super mantap</h4>
-          <p class="harga" style="margin-bottom: 5px;">Rp 5.000.000</p>
-          <p style="color:black"> 
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star unchecked"></span>&nbsp;(10)
-          </p>
-        </div>
-      </a>
+      <h1 class="mt-4" style="font-weight: bold;"></h1>
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div><br />
+        @endif
+        @if (\Session::has('success'))
+        <div class="alert alert-success">
+          <p>{{ \Session::get('success') }}</p>
+        </div><br />
+        @endif
+
     </div>
    
     

@@ -76,10 +76,7 @@ class ListBukuController extends Controller
      */
     public function edit($id)
     {
-        $user = Helper::auth(Session::get('email'),Session::get('password'));
-        $detail_bukus = Detail_buku::where('id_penjual',$user->id)->get();
-        $list_buku = List_buku::find($id);
-        return view('penjual.ubahbuku',compact('list_buku','detail_bukus','id','user'));
+
     }
 
     /**
@@ -93,10 +90,8 @@ class ListBukuController extends Controller
     {
         $list_buku = List_buku::find($id);
         $this->validate(request(), [
-            'id_buku' => 'required',
             'stok' => 'required|numeric'
             ]);
-        $list_buku->id_buku = $request->get('id_buku');
         $list_buku->stok = $request->get('stok');
         $list_buku->save();
         return redirect('penjual/listbuku')->with('success','Data has been updated');
