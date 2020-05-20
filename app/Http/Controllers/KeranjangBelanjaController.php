@@ -75,9 +75,9 @@ class KeranjangBelanjaController extends Controller
                 Keranjang_belanja::where('id_user', $user->id)->where('id_status', '0')->update(['id_status' => $konfirmasi->id]);
                 $user->saldo = $user->saldo - $total;
                 $user->save();
-                return redirect('pembeli/')->with('success', 'Data has been updated');
+                return redirect('pembeli/keranjang')->with('success', 'Data has been updated');
             } else {
-                return redirect('pembeli/')->with('success', 'saldo tidak cukup');
+                return redirect('pembeli/keranjang')->with('success', 'saldo tidak cukup');
             }
         }else{
             return redirect('pembeli/keranjang')->with('success', 'anda hanya boleh membeli buku dari 1 penjual per transaksi');

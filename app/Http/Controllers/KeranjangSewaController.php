@@ -72,9 +72,9 @@ class KeranjangSewaController extends Controller
                 KeranjangSewa::where('id_user', $user->id)->where('id_status', '0')->update(['id_status' => $konfirmasi->id]);
                 $user->saldo = $user->saldo - $total;
                 $user->save();
-                return redirect('pembeli/')->with('success', 'Data has been updated');
+                return redirect('pembeli/keranjangsewa')->with('success', 'Data has been updated');
             } else {
-                return redirect('pembeli/')->with('success', 'saldo tidak cukup');
+                return redirect('pembeli/keranjangsewa')->with('success', 'saldo tidak cukup');
             }
         } else {
             return redirect('pembeli/keranjangsewa')->with('success', 'anda hanya boleh membeli buku dari 1 penjual per transaksi');

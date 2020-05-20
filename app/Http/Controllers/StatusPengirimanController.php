@@ -120,11 +120,32 @@ class StatusPengirimanController extends Controller
                 $transaksi->id_status_konfirmasi = $konfirmasi->id;
                 $transaksi->tanggal_selesai = date('Y-m-d');
                 $transaksi->save();
+
+                $keranjangs2 = Keranjang_belanja::where('id_status',$id)->get();
+                $harga = 0;
+                foreach($keranjangs2 as $keranjang2){
+                    $harga = $harga + $keranjang2['harga'];
+                }
+                $konfirmasi2 = Status_konfirmasi::find($id);
+                $saldo_penjual = Daftar::find($konfirmasi2->id_penjual);
+                $saldo_penjual->saldo = $saldo_penjual->saldo + $harga;
+                $saldo_penjual->save();
+        
+                
             }
         } else {
             if ($request->get('status') == '2') {
                 $konfirmasi->status = $request->get('status');
                 $konfirmasi->save();
+                $keranjangs2 = KeranjangSewa::where('id_status',$id)->get();
+                $harga = 0;
+                foreach($keranjangs2 as $keranjang2){
+                    $harga = $harga + $keranjang2['harga'];
+                }
+                $konfirmasi2 = Status_konfirmasi::find($id);
+                $saldo_penjual = Daftar::find($konfirmasi2->id_penjual);
+                $saldo_penjual->saldo = $saldo_penjual->saldo + $harga;
+                $saldo_penjual->save();
             } else if ($request->get('status') == '4') {
                 $konfirmasi->tanggal_selesai = date('Y-m-d');
                 $konfirmasi->status = $request->get('status');
@@ -140,6 +161,15 @@ class StatusPengirimanController extends Controller
                 $pembeli = Daftar::find($konfirmasi->id_user);
                 $pembeli->saldo = $pembeli->saldo + $total;
                 $pembeli->save();
+                $keranjangs2 = KeranjangSewa::where('id_status',$id)->get();
+                $harga = 0;
+                foreach($keranjangs2 as $keranjang2){
+                    $harga = $harga + $keranjang2['harga'];
+                }
+                $konfirmasi2 = Status_konfirmasi::find($id);
+                $saldo_penjual = Daftar::find($konfirmasi2->id_penjual);
+                $saldo_penjual->saldo = $saldo_penjual->saldo - $harga;
+                $saldo_penjual->save();
                 $transaksi = new Transaction_log;
                 $transaksi->id_status_konfirmasi = $konfirmasi->id;
                 $transaksi->tanggal_selesai = date('Y-m-d');
