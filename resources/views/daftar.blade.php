@@ -1,190 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
 
-  <!DOCTYPE html>
-  <html lang="en">
+<head>
 
-  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <title>Rebook</title>
 
-    <title>Rebook</title>
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
-    <link href="{{ URL::asset('css/simple-sidebar.css') }}" rel="stylesheet">
 
-  </head>
+  <link href="{{ URL::asset('css/app.css') }}" rel="stylesheet">
 
-  <body>
+</head>
 
-
+<body>
     <div class="d-flex" id="wrapper">
+      <div id="page-content-wrapper " style="width: 100%;">
+        <div class="row login signup">
+          <div class="col-xs-12 col-md-3">
+            <div class="login-logo">Re-book</div>
+          </div>
+          <div class="col-xs-12 col-md-9">
+            <div class="login-form signup-form">
+              <div class="container sign-up">
+                <div class="mr-3 size-md color-grey">Sudah punya akun ?</div>
+                <button class="blue-button">Masuk</button>
+              </div>
 
-      <!-- Sidebar -->
-      <div class="bg-light" id="sidebar-wrapper" style="position: fixed;z-index: 1000;" >
-
-        <div class="list-group list-group-flush">
-          
-            <div class="sidebar-heading bg-dark text-light " style="
-            padding-top: 60px;
-            text-align: center;
-
-            "><img src="https://st2.depositphotos.com/1104517/11965/v/950/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
-            margin-left: auto;
-            margin-right: auto;">
-          Anda Belum Login</div>
-        @navbar
-        <a href="logout.html" class="list-group-item list-group-item-action">Beranda</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Perencanaan Wilayah Kota</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Interior</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Komunikasi Visual</a>
-      </div>
-    </div>
-    <!-- /#sidebar-wrapper -->
-
-    <!-- Page Content -->
-    <div id="page-content-wrapper" style="width: 100%;">
-
-      <nav class="navbar navbar-dark bg-dark navbar-expand-lg" style="position: fixed; width:100%;z-index: 10000;">
-        <button class="btn btn-outline-light" id="menu-toggle">Menu</button>
-            <div class="navbar-brand" style="background-image: url('kemas.png');background-size: 50px 50px;background-position: left;background-repeat: no-repeat; padding-left: 50px">Rebook</div>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-          
-                <div class="form-inline">
-                  <input class="form-control mr-sm-2" type="text" placeholder="NRP" aria-label="Search" id="nrp">
-                  <input class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Search" id="password">
-                  <button class="btn btn-success mr-sm-2">Login</button>
-                  
+              <form class="container">
+                <div class="size-md color-grey text-bold mb-3">
+                  Informasi Pribadi
                 </div>
-            <a href="daftar.html">
-              <button class="btn btn-primary mr-sm-2" type="button">Daftar</button>
-            </a>
+                <div class="row mb-4">
+                  <div class="col-xs-12 col-md-6">
+                    <div class="form-group">
+                      <label for="formGroupExampleInput">Nama Depan</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="formGroupExampleInput"
+                        placeholder="Masukan nama depan"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">Nama Akun</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="formGroupExampleInput2"
+                        placeholder="Masukan nama akun"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-6">
+                    <div class="form-group">
+                      <label for="formGroupExampleInput">Nama Belakang</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="formGroupExampleInput"
+                        placeholder="Masukan nama belakang"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="size-md color-grey text-bold mb-3">
+                  Informasi Akun
+                </div>
+                <div class="row mb-4">
+                  <div class="col-xs-12 col-md-6">
+                    <div class="form-group">
+                      <label for="formGroupExampleInput">No Telepon</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="formGroupExampleInput"
+                        placeholder="Masukan no telepon"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2">Surel</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="formGroupExampleInput2"
+                        placeholder="Masukan surel"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-6">
+                    <div class="form-group">
+                      <label for="formGroupExampleInput">Kata Sandi</label>
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="formGroupExampleInput"
+                        placeholder="Masukan email"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="formGroupExampleInput2"
+                        >Konfirmasi Kata Sandi</label
+                      >
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="formGroupExampleInput2"
+                        placeholder="Masukan password"
+                      />
+                    </div>
+                  </div>
+                </div>
 
-          </ul>
+                <div class="form-group mb-4">
+                    <label for="exampleFormControlSelect1">Akun saya sebagai</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                      <option>Pembeli</option>
+                      <option>Penyedia buku</option>
+                    </select>
+                  </div>
+
+                <div class="row justify-content-end">
+                  <div class="col-xs-12 col-md-6 login-button">
+                    <button class="blue-button">Buat Akun</button>
+                  </div>
+                </div>
+              </form>
+
+              <div class="bantuan">
+                <div class="text-bold size-md mb-2">Bantuan</div>
+                <div class="d-flex">
+                  <div class="mr-3 color-grey">Pusat Bantuan</div>
+                  <div class="mr-3 color-grey">Syarat dan Ketentuan</div>
+                  <div class="mr-3 color-grey">Kebijakan Privasi</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </nav>
-      
-      <div id="containerfluid" class="container-fluid">
- 
-        <h2 class="mt-4">Daftar</h2>
-		@if ($errors->any())
-		<div class="alert alert-danger">
-			<ul>
-				@foreach ($errors->all() as $error)
-				<li>{{ $error }}</li>
-				@endforeach
-			</ul>
-		</div><br />
-		@endif
-		@if (\Session::has('success'))
-		<div class="alert alert-success">
-			<p>{{ \Session::get('success') }}</p>
-		</div><br />
-		@endif
-		<form method="post" action="{{url('daftar')}}">
-			{{csrf_field()}}
-    <div class="form-group">
-      <label>email</label>
-      <input type="text" name="email" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>password</label>
-      <input type="password" name="password" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>konfirmasi password</label>
-      <input type="password" name="konfirmasi_password" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Nama Lengkap</label>
-      <input type="text" name="nama_lengkap" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Alamat</label>
-      <input type="text" name="alamat" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Tanggal Lahir</label>
-      <input type="date" name="tanggal_lahir" class="form-control">
-    </div>
-	<div class="form-group">
-      <label>no hp</label>
-      <input type="text" name="no_hp" class="form-control">
-    </div>
-	<div class="form-group">
-      <label>saldo</label>
-      <input type="text" name="saldo" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>status</label>
-      <select name="status" class="form-control">
-        <option value="1">pembeli</option>
-		<option value="2">penjual</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>foto profil</label>
-      <input type="text" name="foto_profil" class="form-control">
-    </div>
-	<!--
-    <div class="form-group">
-      <label>Foto Profil</label>
-      <p><img src="foto_profil/none.jpg" height="100" width="100"></p>
-      <div class="custom-file">
-      <input type="file" class="custom-file-input" id="customFile">
-      <label class="custom-file-label" for="customFile">Choose file</label>
       </div>
-    </div>
-	!-->
-
-    <button type="submit" class="btn btn-primary">Daftar</button>
-  </form>
-
+      <!-- /#page-content-wrapper -->
     </div>
 
+    <!-- /#wrapper -->
 
-       
-
-
-  </div>
-  <!-- /#page-content-wrapper -->
-
-  </div>
-
-  <!-- /#wrapper -->
-
-
-  <!-- Menu Toggle Script -->
-  <script>
-    $("#menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    });
-    $(document).ready(function() {
-      $('#list').click(function(event){event.preventDefault();$('#products .item').addClass('list-group-item');});
-      $('#grid').click(function(event){event.preventDefault();$('#products .item').removeClass('list-group-item');$('#products .item').addClass('grid-group-item');});
-    });
-  </script>
-
+    <!-- Menu Toggle Script -->
   </body>
 
-  </html>
+</html>

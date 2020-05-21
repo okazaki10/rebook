@@ -19,5 +19,8 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('login');
 });
+Route::get('/daftar', function () {
+    return view('daftar');
+});
 Route::resource('daftar','DaftarController');
 Route::post('validasi','DaftarController@validasi');

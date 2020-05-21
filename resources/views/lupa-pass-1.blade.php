@@ -40,21 +40,18 @@
 
             <form class="container">
               <div class="form-group">
-                <label for="formGroupExampleInput">Email</label>
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Masukan email" />
+                <label for="formGroupExampleInput">Surel</label>
+                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Masukan surel" />
               </div>
               <div class="form-group">
-                <label for="formGroupExampleInput2">Password</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan password" />
+                <label for="formGroupExampleInput2">Kode Captcha</label>
+                <input type="text" class="form-control" id="formGroupExampleInput2"
+                  placeholder="Masukan kode Captcha" />
               </div>
 
-              <div class="row justify-content-between">
-                <div class="col-xs-12 col-md-6">
-                  <div class="size-md color-grey">Lupa password?</div>
-                </div>
-                <div class="col-xs-12 col-md-6 login-button">
-                  <button class="blue-button">Masuk</button>
-                </div>
+              <div class="d-flex justify-content-end align-items-center">
+                <div class="size-md text-bold color-grey mr-3">Kembali</div>
+                <button class="blue-button">Lanjutkan</button>
               </div>
             </form>
 
