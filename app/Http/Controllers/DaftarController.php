@@ -48,26 +48,31 @@ class DaftarController extends Controller
             'foto_profil' => 'nullable'
         ]);
         $daftar = new Daftar;
-        if ($request->get('password') == $request->get('konfirmasi_password')) {
-            $daftar->email = $request->get('email');
-            $daftar->password = $request->get('password');
-            $daftar->nama_lengkap = $request->get('nama_lengkap');
-            $daftar->alamat = $request->get('alamat');
-            $daftar->tanggal_lahir = $request->get('tanggal_lahir');
-            $daftar->no_hp = $request->get('no_hp');
-            $daftar->saldo = '0';
-            $daftar->status = $request->get('status');
-            if ($request->hasFile('foto_profil')) {
-                $path = $request->file('foto_profil')->store('public/profil');
-                $path2 = str_replace("public", "storage", $path);
-                $daftar->foto_profil = $path2;
+        $validate = Daftar::where('email', $request->get('email'))->first();
+        if ($validate == null) {
+            if ($request->get('password') == $request->get('konfirmasi_password')) {
+                $daftar->email = $request->get('email');
+                $daftar->password = $request->get('password');
+                $daftar->nama_lengkap = $request->get('nama_lengkap');
+                $daftar->alamat = $request->get('alamat');
+                $daftar->tanggal_lahir = $request->get('tanggal_lahir');
+                $daftar->no_hp = $request->get('no_hp');
+                $daftar->saldo = '0';
+                $daftar->status = $request->get('status');
+                if ($request->hasFile('foto_profil')) {
+                    $path = $request->file('foto_profil')->store('public/profil');
+                    $path2 = str_replace("public", "storage", $path);
+                    $daftar->foto_profil = $path2;
+                } else {
+                    $daftar->foto_profil = "storage/no_profile.jpg";
+                }
+                $daftar->save();
+                return redirect('/')->with('success', 'Pendaftaran berhasil, silahkan login');
             } else {
-                $daftar->foto_profil = "storage/no_profile.jpg";
+                return redirect('daftar/create')->with('failed', 'Konfirmasi password tidak sama');
             }
-            $daftar->save();
-            return redirect('/');
         } else {
-            return redirect('daftar/create')->with('failed', 'konfirmasi password tidak sama');
+            return redirect('daftar/create')->with('failed', 'Email sudah terdaftar');
         }
     }
 
@@ -83,7 +88,7 @@ class DaftarController extends Controller
                 return redirect('penjual/');
             }
         } else {
-            return redirect('/')->with('success','username atau password salah');
+            return redirect('/')->with('failed', 'Username atau password salah');
         }
     }
 

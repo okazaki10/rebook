@@ -86,15 +86,15 @@
 		<form enctype="multipart/form-data" method="post" action="{{action('DaftarController@store')}}">
 			{{csrf_field()}}
     <div class="form-group">
-      <label>email</label>
+      <label>Email</label>
       <input type="text" name="email" class="form-control">
     </div>
     <div class="form-group">
-      <label>password</label>
+      <label>Password</label>
       <input type="password" name="password" class="form-control">
     </div>
     <div class="form-group">
-      <label>konfirmasi password</label>
+      <label>Konfirmasi password</label>
       <input type="password" name="konfirmasi_password" class="form-control">
     </div>
     <div class="form-group">
@@ -110,7 +110,7 @@
       <input type="date" name="tanggal_lahir" class="form-control">
     </div>
 	<div class="form-group">
-      <label>no hp</label>
+      <label>No hp</label>
       <input type="number" name="no_hp" class="form-control">
     </div>
     <div class="form-group">

@@ -42,7 +42,7 @@
           margin-left: auto;
           margin-right: auto;">
           Anda Belum Login</div>
-
+        <a href="{{url('/')}}" class="list-group-item list-group-item-action">Beranda</a>
 
       </div>
     </div>
@@ -82,84 +82,89 @@
 
       <div id="containerfluid" class="container-fluid">
         <h1 class="mt-4" style="font-weight: bold;"></h1>
-          <h2 class="mt-4">Beli/sewa buku</h2>
-          @if ($errors->any())
-          <div class="alert alert-danger">
-            <ul>
-              @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-              @endforeach
-            </ul>
-          </div><br />
-          @endif
-          @if (\Session::has('success'))
-          <div class="alert alert-success">
-            <p>{{ \Session::get('success') }}</p>
-          </div><br />
-          @endif
-          <form method="GET" action="index.search">
-            <div class="row">
-              <div class="col-md-3">
-                <select name="type" class="form-control">
-                  <option value="judul">Judul</option>
-                  <option value="kategori">Kategori</option>
-                  <option value="penulis">Penulis</option>
-                </select>
-              </div>
-              <div class="col-md-3">
-                <input type="text" class="form-control" name="pencarian">
-              </div>
-              <div class="col-md-6">
-                <button type="submit" name="sewa" value="0" class="btn btn-success mr-sm-2">Cari</button>
-                <button type="submit" name="sewa" value="1" class="btn btn-primary mr-sm-2">Cari yang bisa disewa</button>
-              </div>
+        <h2 class="mt-4">Beli/sewa buku</h2>
+        @if ($errors->any())
+        <div class="alert alert-danger">
+          <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div><br />
+        @endif
+        @if (\Session::has('success'))
+        <div class="alert alert-success">
+          <p>{{ \Session::get('success') }}</p>
+        </div><br />
+        @endif
+        @if (\Session::has('failed'))
+        <div class="alert alert-danger">
+          <p>{{ \Session::get('failed') }}</p>
+        </div><br />
+        @endif
+        <form method="GET" action="index.search">
+          <div class="row">
+            <div class="col-md-3">
+              <select name="type" class="form-control">
+                <option value="judul">Judul</option>
+                <option value="kategori">Kategori</option>
+                <option value="penulis">Penulis</option>
+              </select>
             </div>
-          </form>
-          @foreach($list_bukus as $list_buku)
-          <div class="jumbotron jumbotron-fluid" style=" padding-bottom: 0px;padding-top: 0px;">
-            <div class="container container-fluid">
-              <div class="card">
-                <div class="row">
+            <div class="col-md-3">
+              <input type="text" class="form-control" name="pencarian">
+            </div>
+            <div class="col-md-6">
+              <button type="submit" name="sewa" value="0" class="btn btn-success mr-sm-2">Cari</button>
+              <button type="submit" name="sewa" value="1" class="btn btn-primary mr-sm-2">Cari yang bisa disewa</button>
+            </div>
+          </div>
+        </form>
+        @foreach($list_bukus as $list_buku)
+        <div class="jumbotron jumbotron-fluid" style=" padding-bottom: 0px;padding-top: 0px;">
+          <div class="container container-fluid">
+            <div class="card">
+              <div class="row">
 
-                  <div class="col-md-6">
+                <div class="col-md-6">
 
-                    <img src="{{asset($list_buku->gambar)}}" class="img-fluid">
+                  <img src="{{asset($list_buku->gambar)}}" class="img-fluid">
 
+                </div>
+
+                <div class="col-md-6">
+                  <div class="card-block">
+                    <br>
+                    <span class="card-title" style="font-size: 18pt;font-weight: bold;">{{$list_buku->judul}}</h4></span>
+
+                    <h5>{{$list_buku->penulis}}</h5>
+
+
+                    <h6>Bisa disewa? : {{$list_buku->bisa_disewa == '1'?'Ya':'Tidak'}}</h6>
+                    <h6>Kategori : {{$list_buku->kategori}}</h6>
+                    <h6 style="font-weight: bold;">Tanggal Terbit : {{$list_buku->tanggal_terbit}}</h6>
+                    <h6>Stok : {{$list_buku->stok}}</h6>
+                    <p style="font-weight: bold;">Deskripsi</p>
+                    <p style="text-align: justify;text-indent: 30px; margin-right: 25px;">{{$list_buku->deskripsi}}</p>
                   </div>
 
-                  <div class="col-md-6">
-                    <div class="card-block">
-                      <br>
-                      <span class="card-title" style="font-size: 18pt;font-weight: bold;">{{$list_buku->judul}}</h4></span>
+                  <span class="text" style="font-size: 20pt; font-weight: 1000" ;>Rp. {{$list_buku->harga}}</span>
+                  <span class="resize2">
+                    <button class="btn btn-primary" type="submit" disabled>Lihat</button></a>
+                  </span>
 
-                      <h5>{{$list_buku->penulis}}</h5>
-
-
-                      <h6>Bisa disewa? : {{$list_buku->bisa_disewa == '1'?'Ya':'Tidak'}}</h6>
-                      <h6>Kategori : {{$list_buku->kategori}}</h6>
-                      <h6 style="font-weight: bold;">Tanggal Terbit : {{$list_buku->tanggal_terbit}}</h6>
-                      <h6>Stok : {{$list_buku->stok}}</h6>
-                      <p style="font-weight: bold;">Deskripsi</p>
-                      <p style="text-align: justify;text-indent: 30px; margin-right: 25px;">{{$list_buku->deskripsi}}</p>
-                    </div>
-
-                    <span class="text" style="font-size: 20pt; font-weight: 1000" ;>Rp. {{$list_buku->harga}}</span>
-                    <span class="resize2">
-                      <button class="btn btn-primary" type="submit" disabled>Lihat</button></a>
-                    </span>
-
-                  </div>
                 </div>
               </div>
             </div>
           </div>
-
-          @endforeach
-
-          {{$list_bukus->links()}}
         </div>
+
+        @endforeach
+
+        {{$list_bukus->links()}}
       </div>
-   
+    </div>
+
 
     <!-- /#page-content-wrapper -->
 
