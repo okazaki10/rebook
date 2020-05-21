@@ -91,7 +91,7 @@
 
       <div id="containerfluid" class="container-fluid">
 
-        <h2 class="mt-4">Tambahkan Buku</h2>
+        <h1 class="mt-4" style="text-align: center;">Detail Buku</h1>
         @if ($errors->any())
         <div class="alert alert-danger">
           <ul>
@@ -106,51 +106,94 @@
           <p>{{ \Session::get('success') }}</p>
         </div><br />
         @endif
-        <div class="form-group">
-          <p><img src="{{asset($list_buku->gambar)}}" width=100 height=100></p>
-        </div>
-        <div class="form-group">
-          <label>nama penjual</label>
-          <p>{{$list_buku->nama_lengkap}}</p>
-        </div>
-        <div class="form-group">
-          <label>alamat penjual</label>
-          <p>{{$list_buku->alamat}}</p>
-          <div class="form-group">
-            <label>judul buku</label>
-            <p>{{$list_buku->judul}}</p>
-          </div>
-          <div class="form-group">
-            <label>kategori buku</label>
-            <p>{{$list_buku->kategori}}</p>
-          </div>
-          <div class="form-group">
-            <label>stok</label>
-            <p>{{$list_buku->stok}}</p>
-          </div>
-          <div class="form-group">
-            <label>harga</label>
-            <p>{{$list_buku->harga}}</p>
-          </div>
+        <div class="jumbotron jumbotron-fluid" style="
+    padding-top: 32px;
+">
 
-        </div>
-        <form method="POST" enctype="multipart/form-data" action="{{action('PembelianController@store')}}">
-          {{csrf_field()}}
-          <input type="hidden" name="id_penjual" value="{{$list_buku->id_penjual}}" class="form-control">
-          <input type="hidden" name="id_list_buku" value="{{$id}}" class="form-control">
-          <div class="form-group">
-            <label>beli/sewa jumlah</label>
-            <input type="text" name="jumlah" class="form-control">
+
+          <div class="container container-fluid">
+            <div class="card1">
+              <div class="card1">
+                <div class="card justify-content-center">
+                  <img src="{{asset($list_buku->gambar)}}" width=100%>
+                </div>
+              </div>
+
+
+              <span>
+                <img scr="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1527724881l/39330961.jpg" style="align-items: center;" class="img-fluid">
+              </span>
+              <div class="form-group row">
+                <label for="namaPenjual" class="col-sm-2 col-form-label">Nama Penjual</label>
+                <div class="col-sm-10">
+                  <input type="text" readonly class="form-control" id="namaPenjual" placeholder="" value="{{$list_buku->nama_lengkap}}">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="alamatPenjual" class="col-sm-2 col-form-label">Alamat Penjual</label>
+                <div class="col-sm-10">
+                  <input type="text" readonly class="form-control" id="alamatPenjual" placeholder="" value="{{$list_buku->alamat}}">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="judulBuku" class="col-sm-2 col-form-label">Judul Buku</label>
+                <div class="col-sm-10">
+                  <input type="text" readonly class="form-control" id="judulBuku" placeholder="" value="{{$list_buku->judul}}">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="judulBuku" class="col-sm-2 col-form-label">Deskripsi buku</label>
+                <div class="col-sm-10">
+                  <input type="text" readonly class="form-control" id="judulBuku" placeholder="" value="{{$list_buku->deskripsi}}">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="judulBuku" class="col-sm-2 col-form-label">Tanggal terbit</label>
+                <div class="col-sm-10">
+                  <input type="text" readonly class="form-control" id="judulBuku" placeholder="" value="{{$list_buku->tanggal_terbit}}">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="kategoriBuku" class="col-sm-2 col-form-label">Kategori Buku</label>
+                <div class="col-sm-10">
+                  <input type="text" readonly class="form-control" id="kategoriBuku" placeholder="" value="{{$list_buku->kategori}}">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="stokBuku" class="col-sm-2 col-form-label">Stok</label>
+                <div class="col-sm-10">
+                  <input type="number" readonly class="form-control" id="stokBuku" placeholder="" value="{{$list_buku->stok}}">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="hargaBuku" class="col-sm-2 col-form-label">Harga</label>
+                <div class="col-sm-10">
+                  <input type="text" readonly class="form-control" id="hargaBuku" placeholder="" value="Rp. {{$list_buku->harga}}">
+                </div>
+              </div>
+
+              <form method="POST" enctype="multipart/form-data" action="{{action('PembelianController@store')}}">
+                {{csrf_field()}}
+                <input type="hidden" name="id_penjual" value="{{$list_buku->id_penjual}}" class="form-control">
+                <input type="hidden" name="id_list_buku" value="{{$id}}" class="form-control">
+
+                <div class="form-group">
+                  <label for="beliSewaJumlah">Beli / Sewa Jumlah</label>
+                  <input type="text" name="jumlah" placeholder="Beli / Sewa Jumlah" class="form-control">
+                </div>
+                <button type="submit" name="bisa_disewa" value="0" class="btn btn-primary">Beli</button>
+                @if($list_buku->bisa_disewa == 1)
+                <button type="submit" name="bisa_disewa" value="1" class="btn btn-success">Sewa</button>
+                @endif
+              </form>
+              <a href="{{action('ChatController@show', $list_buku->id_penjual)}}" class="btn btn-warning">Chat penjual</a><br>
+              @if($list_buku->pdf_preview != '')
+              <a href="{{asset($list_buku->pdf_preview)}}" class="btn btn-warning">Download pdf preview</a>
+              @endif
+
+            </div>
           </div>
-          <button type="submit" name="bisa_disewa" value="0" class="btn btn-primary">beli</button>
-          @if($list_buku->bisa_disewa == 1)
-          <button type="submit" name="bisa_disewa" value="1" class="btn btn-success">sewa</button>
-          @endif
-        </form>
-        <a href="{{action('ChatController@show', $list_buku->id_penjual)}}" class="btn btn-warning">Chat penjual</a><br>
-        @if($list_buku->pdf_preview != '')
-        <a href="{{asset($list_buku->pdf_preview)}}" class="btn btn-warning">download pdf preview</a>
-        @endif
+        </div>
       </div>
 
 

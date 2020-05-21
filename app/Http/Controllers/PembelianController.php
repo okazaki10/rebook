@@ -113,7 +113,7 @@ class PembelianController extends Controller
      */
     public function show($id)
     {
-        $list_buku = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->join('user', 'list_buku.id_penjual', '=', 'user.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'user.nama_lengkap', 'user.alamat', 'detail_buku.harga', 'detail_buku.kategori','detail_buku.bisa_disewa','detail_buku.pdf_preview')->where('list_buku.id', $id)->first();
+        $list_buku = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->join('user', 'list_buku.id_penjual', '=', 'user.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'user.nama_lengkap', 'user.alamat', 'detail_buku.harga', 'detail_buku.kategori','detail_buku.bisa_disewa','detail_buku.pdf_preview','detail_buku.deskripsi','detail_buku.tanggal_terbit')->where('list_buku.id', $id)->first();
         $user = Helper::auth(Session::get('email'), Session::get('password'));
         return view('pembeli.beli', compact('user', 'id', 'list_buku'));
     }
