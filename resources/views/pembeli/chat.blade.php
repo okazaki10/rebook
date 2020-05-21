@@ -34,23 +34,26 @@
 
       <div class="list-group list-group-flush">
 
-        <div class="sidebar-heading bg-dark text-light " style="
+        <a href="{{action('ProfilePembeliController@index')}}">
+          <div class="sidebar-heading bg-dark text-light " style="
             padding-top: 60px;
             text-align: center;
 
             "><img src="{{asset($user->foto_profil)}}" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
             margin-left: auto;
             margin-right: auto;">
-          {{ $user->nama_lengkap }}
-        </div>
-        saldo {{$user->saldo}}
-        <a href="{{url('/')}}" class="list-group-item list-group-item-action">Beranda</a>
-        <a href="{{action('KeranjangBelanjaController@index')}}" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Perencanaan Wilayah Kota</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Interior</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Komunikasi Visual</a>
+            {{ $user->nama_lengkap }}
+          </div>
+        </a>
+        <a href="{{url('pembeli')}}" class="list-group-item list-group-item-action">Beranda</a>
+        <a href="{{action('PembelianController@index')}}" class="list-group-item list-group-item-action bg-light">Beli/sewa buku</a>
+        <a href="{{action('KeranjangBelanjaController@index')}}" class="list-group-item list-group-item-action bg-light">Keranjang beli</a>
+        <a href="{{action('KeranjangSewaController@index')}}" class="list-group-item list-group-item-action bg-light">Keranjang sewa</a>
+        <a href="{{action('TransaksiSaldoController@index')}}" class="list-group-item list-group-item-action bg-light">Isi saldo</a>
+        <a href="{{action('ChatController@index')}}" class="list-group-item list-group-item-action bg-light">Chat penjual</a>
+        <a href="{{action('StatusPengirimanController@index')}}" class="list-group-item list-group-item-action bg-light">Cek status pengiriman</a>
       </div>
+
     </div>
     <!-- /#sidebar-wrapper -->
 
@@ -68,24 +71,27 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-
             <div class="form-inline">
-              <input class="form-control mr-sm-2" type="text" placeholder="NRP" aria-label="Search" id="nrp">
-              <input class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Search" id="password">
-              <button class="btn btn-success mr-sm-2">Login</button>
+              <p class="text-white mr-sm-2" style="
+    margin-right: 20px;
+    margin-bottom: 0px;
+">Saldo : Rp.{{$user->saldo}}</p>
+
 
             </div>
+
             <a href="{{action('DaftarController@logout')}}">
-              <button class="btn btn-primary mr-sm-2" type="button">Logout</button>
+              <button class="btn btn-danger mr-sm-2" type="button">Logout</button>
             </a>
 
           </ul>
         </div>
       </nav>
 
+
       <div id="containerfluid" class="container-fluid">
 
-        <h2 class="mt-4">Tambahkan Buku</h2>
+        <h2 class="mt-4">Chat</h2>
         @if ($errors->any())
         <div class="alert alert-danger">
           <ul>
@@ -100,12 +106,30 @@
           <p>{{ \Session::get('success') }}</p>
         </div><br />
         @endif
+        <div class="row fixed-bottom bg-white" style="
+    margin-bottom: 0px;
+">
+          <div class="col-md-2">
 
-        <div id="handle">
+          </div>
+          <div class="col-md-1" style="
+    margin-bottom: 0px;
+    margin-top: 9px;
+">
+            <h6>Pesan :</h6>
+          </div>
+          <div class="col-md-8">
+            <input type="text" name="chat" id="chat" class="form-control">
+          </div>
+          <div class="col-md-1">
+            <button type="button" name="send" id="send" class="btn btn-primary" onclick="kirim()">kirim</button>
+          </div>
+        </div>
+        <div id="handle" style="
+    margin-bottom: 50px;
+">
         </div>
 
-        <input type="text" name="chat" id="chat">
-        <button type="button" name="send" id="send" class="btn btn-primary" onclick="kirim()">kirim</button>
 
 
       </div>
@@ -135,8 +159,20 @@
           });
         }
 
+        function getMessage2() {
+          $.ajax({
+            type: 'GET',
+            url: 'handlechat/{{$id_penjual}}/',
+            data: '',
+            success: function(data) {
+              $("#handle").html(data);
+              window.scrollTo(0, document.body.scrollHeight);
+            }
+          });
+        }
+
         function kirim() {
-         
+
           var chat = $('#chat').val();
           var csrf_token = '{{csrf_token()}}';
           var id_penjual = '{{$id_penjual}}';
@@ -145,7 +181,7 @@
             url: "handlechat/kirim/" + id_penjual + "/" + chat + "/",
             data: '',
             success: function(data) {
-              getMessage();
+              getMessage2();
             }
           });
           $('#chat').val('');

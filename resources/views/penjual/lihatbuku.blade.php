@@ -125,27 +125,30 @@
               <td>{{$list_buku['judul']}}</td>
               <td>{{$list_buku['kategori']}}</td>
               <td>{{$list_buku['bisa_disewa'] == '1'?'Ya':'Tidak'}}</td>
-                <form method="POST" enctype="multipart/form-data" action="{{action('ListBukuController@update',$list_buku['id'])}}">
-                  {{csrf_field()}}
-                  <input name="_method" type="hidden" value="PATCH">
-                  <td>
-                    <input type="number" name="stok" value="{{$list_buku['stok']}}" class="form-control">
-                  </td>
-                  <td>
+              <form method="POST" enctype="multipart/form-data" action="{{action('ListBukuController@update',$list_buku['id'])}}">
+                {{csrf_field()}}
+                <input name="_method" type="hidden" value="PATCH">
+                <td>
+                  <input type="number" name="stok" value="{{$list_buku['stok']}}" class="form-control">
+                </td>
+                <td>
 
                   <button type="submit" class="btn btn-success">Update stok</button>
-                </form>
+              </form>
               </td>
-      
+
               <td>
-                <form action="{{action('ListBukuController@destroy',
-$list_buku['id'])}}" method="post">
+                <form action="{{action('ListBukuController@destroy',$list_buku['id'])}}" method="post">
                   {{csrf_field()}}
                   <input name="_method" type="hidden" value="DELETE">
                   <button class="btn btn-danger" type="submit">Hapus</button>
                 </form>
               </td>
+            </tr>
               @endforeach
+          </tbody>
+        </table>
+     
       </div>
 
 

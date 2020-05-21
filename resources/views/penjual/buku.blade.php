@@ -113,6 +113,11 @@
             <input type="text" name="judul" class="form-control">
           </div>
           <div class="form-group">
+            <label>Deskripsi</label>
+            <textarea type="text" name="deskripsi" class="form-control">
+            </textarea>
+          </div>
+          <div class="form-group">
             <label>Kategori</label>
             <input type="text" name="kategori" class="form-control">
           </div>
@@ -124,6 +129,7 @@
             <label>Penulis</label>
             <input type="text" name="penulis" class="form-control">
           </div>
+        
           <div class="form-group">
             <label>Harga</label>
             <input type="number" name="harga" class="form-control">
@@ -131,8 +137,8 @@
           <div class="form-group">
             <label>Bisa disewa</label>
             <select name="bisa_disewa" class="form-control">
-              <option value="1">ya</option>
-              <option value="0">tidak</option>
+              <option value="1">Ya</option>
+              <option value="0">Tidak</option>
             </select>
           </div>
           <div class="form-group">

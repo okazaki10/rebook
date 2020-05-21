@@ -114,6 +114,10 @@
       <input type="text" name="judul" class="form-control" value="{{$detail_buku->judul}}">
     </div>
     <div class="form-group">
+      <label>Deskripsi</label>
+      <textarea type="text" name="deskripsi" class="form-control">{{$detail_buku->deskripsi}}</textarea>
+    </div>
+    <div class="form-group">
       <label>Kategori</label>
       <input type="text" name="kategori" class="form-control" value="{{$detail_buku->kategori}}">
     </div>

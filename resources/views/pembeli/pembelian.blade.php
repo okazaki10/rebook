@@ -34,21 +34,26 @@
 
       <div class="list-group list-group-flush">
 
-        <div class="sidebar-heading bg-dark text-light " style="
+        <a href="{{action('ProfilePembeliController@index')}}">
+          <div class="sidebar-heading bg-dark text-light " style="
             padding-top: 60px;
             text-align: center;
 
             "><img src="{{asset($user->foto_profil)}}" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
             margin-left: auto;
             margin-right: auto;">
-          {{ $user->nama_lengkap }}</div>
-        <a href="{{url('/')}}" class="list-group-item list-group-item-action">Beranda</a>
-        <a href="{{action('KeranjangBelanjaController@index')}}" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Perencanaan Wilayah Kota</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Interior</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Komunikasi Visual</a>
+            {{ $user->nama_lengkap }}
+          </div>
+        </a>
+        <a href="{{url('pembeli')}}" class="list-group-item list-group-item-action">Beranda</a>
+        <a href="{{action('PembelianController@index')}}" class="list-group-item list-group-item-action bg-light">Beli/sewa buku</a>
+        <a href="{{action('KeranjangBelanjaController@index')}}" class="list-group-item list-group-item-action bg-light">Keranjang beli</a>
+        <a href="{{action('KeranjangSewaController@index')}}" class="list-group-item list-group-item-action bg-light">Keranjang sewa</a>
+        <a href="{{action('TransaksiSaldoController@index')}}" class="list-group-item list-group-item-action bg-light">Isi saldo</a>
+        <a href="{{action('ChatController@index')}}" class="list-group-item list-group-item-action bg-light">Chat penjual</a>
+        <a href="{{action('StatusPengirimanController@index')}}" class="list-group-item list-group-item-action bg-light">Cek status pengiriman</a>
       </div>
+
     </div>
     <!-- /#sidebar-wrapper -->
 
@@ -66,15 +71,17 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-
             <div class="form-inline">
-              <input class="form-control mr-sm-2" type="text" placeholder="NRP" aria-label="Search" id="nrp">
-              <input class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Search" id="password">
-              <button class="btn btn-success mr-sm-2">Login</button>
+              <p class="text-white mr-sm-2" style="
+    margin-right: 20px;
+    margin-bottom: 0px;
+">Saldo : Rp.{{$user->saldo}}</p>
+
 
             </div>
+
             <a href="{{action('DaftarController@logout')}}">
-              <button class="btn btn-primary mr-sm-2" type="button">Logout</button>
+              <button class="btn btn-danger mr-sm-2" type="button">Logout</button>
             </a>
 
           </ul>
@@ -83,7 +90,7 @@
 
       <div id="containerfluid" class="container-fluid">
 
-        <h2 class="mt-4">Tambahkan Buku</h2>
+        <h2 class="mt-4">Beli/sewa buku</h2>
         @if ($errors->any())
         <div class="alert alert-danger">
           <ul>
@@ -99,42 +106,64 @@
         </div><br />
         @endif
         <form method="GET" action="pembelian.cari">
-        <select name="type">
-          <option value="judul">judul</option>
-          <option value="kategori">kategori</option>
-          <option value="penulis">penulis</option>
-        </select>
-        <input type="text" name="pencarian">
-        <button type="submit" name="sewa" value="0" class="btn btn-success mr-sm-2">cari</button>
-        <button type="submit" name="sewa" value="1" class="btn btn-primary mr-sm-2">cari yang bisa disewa</button>
+          <div class="row">
+          <div class="col-md-3">
+          <select name="type" class="form-control">
+            <option value="judul">Judul</option>
+            <option value="kategori">Kategori</option>
+            <option value="penulis">Penulis</option>
+          </select>
+          </div>
+          <div class="col-md-3">
+          <input type="text" class="form-control" name="pencarian">
+          </div>
+          <div class="col-md-6">
+          <button type="submit" name="sewa" value="0" class="btn btn-success mr-sm-2">Cari</button>
+          <button type="submit" name="sewa" value="1" class="btn btn-primary mr-sm-2">Cari yang bisa disewa</button>
+          </div>
+          </div>
         </form>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Gambar</th>
-              <th>Judul Buku</th>
-              <th>Kategori</th>
-              <th>Harga</th>
-              <th>Bisa disewa</th>
-              <th>Stok</th>
+        @foreach($list_bukus as $list_buku)
+        <div class="jumbotron jumbotron-fluid" style=" padding-bottom: 0px;padding-top: 0px;">
+          <div class="container container-fluid">
+            <div class="card">
+              <div class="row">
 
-              <th colspan="3" align="center">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach($list_bukus as $list_buku)
-            <tr>
-              <td><img src="{{asset($list_buku->gambar)}}" height=100 width=100></td>
-              <td>{{$list_buku->judul}}</td>
-              <td>{{$list_buku->kategori}}</td>
-              <td>{{$list_buku->harga}}</td>
-              <td>{{$list_buku->bisa_disewa == '1'?'ya':'tidak'}}</td>
-              <td>{{$list_buku->stok}}</td>
-              <td><a href="{{action('PembelianController@show', $list_buku->id)}}" class="btn btn-warning">Lihat</a></td>
-              @endforeach
-            </tr>
-          </tbody>
-        </table>
+                <div class="col-md-6">
+
+                  <img src="{{asset($list_buku->gambar)}}" class="img-fluid">
+
+                </div>
+
+                <div class="col-md-6">
+                  <div class="card-block">
+                    <br>
+                    <span class="card-title" style="font-size: 18pt;font-weight: bold;">{{$list_buku->judul}}</h4></span>
+
+                    <h5>{{$list_buku->penulis}}</h5>
+
+
+                    <h6>Bisa disewa? : {{$list_buku->bisa_disewa == '1'?'ya':'tidak'}}</h6>
+                    <h6>Kategori : {{$list_buku->kategori}}</h6>
+                    <h6 style="font-weight: bold;">Tanggal Terbit : {{$list_buku->tanggal_terbit}}</h6>
+                    <h6>Stok : {{$list_buku->stok}}</h6>
+                    <p style="font-weight: bold;">Deskripsi</p>
+                    <p style="text-align: justify;text-indent: 30px; margin-right: 25px;">{{$list_buku->deskripsi}}</p>
+                  </div>
+
+                  <span class="text" style="font-size: 20pt; font-weight: 1000" ;>Rp. {{$list_buku->harga}}</span>
+                  <span class="resize2">
+                    <a href="{{action('PembelianController@show', $list_buku->id)}}"><button class="btn btn-primary" type="submit">Lihat</button></a>
+                  </span>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        @endforeach
+
         {{$list_bukus->links()}}
       </div>
       <!-- /#page-content-wrapper -->

@@ -22,7 +22,7 @@ class PembelianController extends Controller
     public function index()
     {
         $user = Helper::auth(Session::get('email'), Session::get('password'));
-        $list_bukus = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'detail_buku.harga', 'detail_buku.kategori', 'detail_buku.bisa_disewa')->paginate(5);
+        $list_bukus = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'detail_buku.harga', 'detail_buku.kategori', 'detail_buku.bisa_disewa','detail_buku.penulis','detail_buku.deskripsi','detail_buku.tanggal_terbit')->paginate(5);
         return view('pembeli.pembelian', compact('user', 'list_bukus'));
     }
 
@@ -42,12 +42,12 @@ class PembelianController extends Controller
             $detail_buku = 'detail_buku.penulis';
         }
         if (Session::get('sewa') == "1") {
-            $list_bukus = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'detail_buku.harga', 'detail_buku.kategori', 'detail_buku.bisa_disewa')
+            $list_bukus = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'detail_buku.harga', 'detail_buku.kategori', 'detail_buku.bisa_disewa','detail_buku.penulis','detail_buku.deskripsi','detail_buku.tanggal_terbit')
                 ->where($detail_buku, 'like', '%' . $request->pencarian . '%')
                 ->where('detail_buku.bisa_disewa','1')
                 ->paginate(5);
         } else {
-            $list_bukus = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'detail_buku.harga', 'detail_buku.kategori', 'detail_buku.bisa_disewa')
+            $list_bukus = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'detail_buku.harga', 'detail_buku.kategori', 'detail_buku.bisa_disewa','detail_buku.penulis','detail_buku.deskripsi','detail_buku.tanggal_terbit')
                 ->where($detail_buku, 'like', '%' . $request->pencarian . '%')
                 ->paginate(5);
         }

@@ -137,7 +137,7 @@
       <input type="number" name="no_hp" class="form-control" value="{{$daftar->no_hp}}">
     </div>
     <div class="form-group">
-      <label>Status</label>
+      <label>Sebagai</label>
      
        <p>{{$daftar->status == 1 ? 'Pembeli' : ''}}
     {{$daftar->status == 2 ? 'Penjual' : ''}}
@@ -159,7 +159,7 @@
     </div>
 	!-->
 
-    <button type="submit" class="btn btn-primary">Daftar</button>
+    <button type="submit" class="btn btn-succ">Update biodata</button>
   </form>
 
     </div>

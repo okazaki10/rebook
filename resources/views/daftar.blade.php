@@ -114,26 +114,16 @@
       <input type="number" name="no_hp" class="form-control">
     </div>
     <div class="form-group">
-      <label>status</label>
+      <label>Sebagai</label>
       <select name="status" class="form-control">
-        <option value="1">pembeli</option>
-		<option value="2">penjual</option>
+        <option value="1">Pembeli</option>
+		<option value="2">Penjual</option>
       </select>
     </div>
     <div class="form-group">
-      <label>foto profil</label>
+      <label>Foto profil</label>
       <input type="file" name="foto_profil" class="form-control">
     </div>
-	<!--
-    <div class="form-group">
-      <label>Foto Profil</label>
-      <p><img src="foto_profil/none.jpg" height="100" width="100"></p>
-      <div class="custom-file">
-      <input type="file" class="custom-file-input" id="customFile">
-      <label class="custom-file-label" for="customFile">Choose file</label>
-      </div>
-    </div>
-	!-->
 
     <button type="submit" class="btn btn-primary">Daftar</button>
   </form>

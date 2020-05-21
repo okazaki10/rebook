@@ -34,23 +34,26 @@
 
       <div class="list-group list-group-flush">
 
-        <div class="sidebar-heading bg-dark text-light " style="
+        <a href="{{action('ProfilePembeliController@index')}}">
+          <div class="sidebar-heading bg-dark text-light " style="
             padding-top: 60px;
             text-align: center;
 
             "><img src="{{asset($user->foto_profil)}}" width="100" height="100" class="rounded-circle" alt="Cinque Terre" style="display: block;
             margin-left: auto;
             margin-right: auto;">
-          {{ $user->nama_lengkap }}
-        </div>
-        saldo {{$user->saldo}}
-        <a href="{{url('/')}}" class="list-group-item list-group-item-action">Beranda</a>
-        <a href="{{action('KeranjangBelanjaController@index')}}" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Perencanaan Wilayah Kota</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Interior</a>
-        <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Komunikasi Visual</a>
+            {{ $user->nama_lengkap }}
+          </div>
+        </a>
+        <a href="{{url('pembeli')}}" class="list-group-item list-group-item-action">Beranda</a>
+        <a href="{{action('PembelianController@index')}}" class="list-group-item list-group-item-action bg-light">Beli/sewa buku</a>
+        <a href="{{action('KeranjangBelanjaController@index')}}" class="list-group-item list-group-item-action bg-light">Keranjang beli</a>
+        <a href="{{action('KeranjangSewaController@index')}}" class="list-group-item list-group-item-action bg-light">Keranjang sewa</a>
+        <a href="{{action('TransaksiSaldoController@index')}}" class="list-group-item list-group-item-action bg-light">Isi saldo</a>
+        <a href="{{action('ChatController@index')}}" class="list-group-item list-group-item-action bg-light">Chat penjual</a>
+        <a href="{{action('StatusPengirimanController@index')}}" class="list-group-item list-group-item-action bg-light">Cek status pengiriman</a>
       </div>
+
     </div>
     <!-- /#sidebar-wrapper -->
 
@@ -68,15 +71,17 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-
             <div class="form-inline">
-              <input class="form-control mr-sm-2" type="text" placeholder="NRP" aria-label="Search" id="nrp">
-              <input class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Search" id="password">
-              <button class="btn btn-success mr-sm-2">Login</button>
+              <p class="text-white mr-sm-2" style="
+    margin-right: 20px;
+    margin-bottom: 0px;
+">Saldo : Rp.{{$user->saldo}}</p>
+
 
             </div>
+
             <a href="{{action('DaftarController@logout')}}">
-              <button class="btn btn-primary mr-sm-2" type="button">Logout</button>
+              <button class="btn btn-danger mr-sm-2" type="button">Logout</button>
             </a>
 
           </ul>
@@ -85,7 +90,7 @@
 
       <div id="containerfluid" class="container-fluid">
 
-        <h2 class="mt-4">Tambahkan Buku</h2>
+        <h2 class="mt-4">Cek status pengiriman</h2>
         @if ($errors->any())
         <div class="alert alert-danger">
           <ul>
@@ -127,10 +132,10 @@
           <input name="_method" type="hidden" value="PATCH">
           <input name="sewa" type="hidden" value="{{$sewa}}">
           @if($konfirmasis[0]['status'] == '1')
-          <button type="submit" name="status" value="2" class="btn btn-primary">konfirmasi barang sudah sampai</button>
+          <button type="submit" name="status" value="2" class="btn btn-primary">Konfirmasi barang sudah sampai</button>
           @endif
           @if($konfirmasis[0]['status'] == '2' && $konfirmasis[0]['bisa_disewa'] == '1')
-          <button type="submit" name="status" value="4" class="btn btn-primary">kembalikan barang</button>
+          <button type="submit" name="status" value="4" class="btn btn-primary">Kembalikan barang</button>
           @endif
          
         </form>

@@ -153,8 +153,9 @@ $detail_buku['id'])}}" method="post">
             @endforeach
           </tbody>
         </table>
+        {{$detail_bukus->links()}}
       </div>
-      {{$detail_bukus->links()}}
+ 
 
 
 
