@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Daftar;
 use Illuminate\Http\Request;
+use Session;
+use App\Helper\Helper;
 
 class DaftarController extends Controller
 {
@@ -13,9 +16,7 @@ class DaftarController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-      
-    }
+    { }
 
     /**
      * Show the form for creating a new resource.
@@ -35,34 +36,54 @@ class DaftarController extends Controller
      */
     public function store(Request $request)
     {
-        $daftar = $this->validate(request(), [
-            'password' => 'required',
-            'email' => 'required',
+        $this->validate(request(), [
+            'email' => 'required|min:4',
+            'password' => 'required|min:4',
+            'konfirmasi_password' => 'required',
             'nama_lengkap' => 'required',
             'alamat' => 'required',
             'tanggal_lahir' => 'required',
-            'no_hp' => 'required',
-            'saldo' => 'required',
+            'no_hp' => 'required|numeric',
             'status' => 'required',
-            'foto_profil' => 'required'
+            'foto_profil' => 'nullable'
         ]);
-        Daftar::create($daftar);
-        return redirect('/');
+        $daftar = new Daftar;
+        if ($request->get('password') == $request->get('konfirmasi_password')) {
+            $daftar->email = $request->get('email');
+            $daftar->password = $request->get('password');
+            $daftar->nama_lengkap = $request->get('nama_lengkap');
+            $daftar->alamat = $request->get('alamat');
+            $daftar->tanggal_lahir = $request->get('tanggal_lahir');
+            $daftar->no_hp = $request->get('no_hp');
+            $daftar->saldo = '0';
+            $daftar->status = $request->get('status');
+            if ($request->hasFile('foto_profil')) {
+                $path = $request->file('foto_profil')->store('public/profil');
+                $path2 = str_replace("public", "storage", $path);
+                $daftar->foto_profil = $path2;
+            } else {
+                $daftar->foto_profil = "storage/no_profile.jpg";
+            }
+            $daftar->save();
+            return redirect('/');
+        } else {
+            return redirect('daftar/create')->with('failed', 'konfirmasi password tidak sama');
+        }
     }
 
     public function validasi(Request $request)
     {
-        $daftar = Daftar::where('email',$request->email)->where('password',$request->password);
-        $jumlah = $daftar->count();
-        if ($jumlah > 0){
-        $status = $daftar->get();
-            if ($status[0]['status'] == 1){
-            return redirect('beli');
-            }else if($status[0]['status'] == 2){
-            return redirect('jual');
+        $auth = Helper::auth($request->email, $request->password);
+        if ($auth != null) {
+            Session::put('email', $auth->email);
+            Session::put('password', $auth->password);
+            if ($auth->status == 1) {
+                return redirect('pembeli/');
+            } else if ($auth->status == 2 || $auth->status == 3) {
+                return redirect('penjual/');
             }
-        }else{
-            return redirect('/');
+        } else {
+            return redirect('/')->with('success','username atau password salah');
         }
     }
 
@@ -109,5 +130,10 @@ class DaftarController extends Controller
     public function destroy(Daftar $daftar)
     {
         //
+    }
+    public function logout()
+    {
+        Session::flush();
+        return redirect('/');
     }
 }

@@ -43,13 +43,8 @@
           margin-left: auto;
           margin-right: auto;">
         Anda Belum Login</div>
-     <x-navbar />
-      <a href="logout.html" class="list-group-item list-group-item-action">Beranda</a>
-      <a href="logout.html" class="list-group-item list-group-item-action bg-light">Arsitektur</a>
-      <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Produk</a>
-      <a href="logout.html" class="list-group-item list-group-item-action bg-light">Perencanaan Wilayah Kota</a>
-      <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Interior</a>
-      <a href="logout.html" class="list-group-item list-group-item-action bg-light">Desain Komunikasi Visual</a>
+
+   
     </div>
   </div>
   <!-- /#sidebar-wrapper -->
@@ -57,7 +52,9 @@
   <!-- Page Content -->
   <div id="page-content-wrapper" style="width: 100%;">
 
-    <nav class="navbar navbar-dark bg-dark navbar-expand-lg" style="position: fixed; width:100%;z-index: 10000;">
+    <nav class="navbar navbar-dark bg-dark navba
+    
+    r-expand-lg" style="position: fixed; width:100%;z-index: 10000;">
       <button class="btn btn-outline-light" id="menu-toggle">Menu</button>
          <div class="navbar-brand" style="background-image: url('kemas.png');background-size: 50px 50px;background-position: left;background-repeat: no-repeat; padding-left: 50px">Rebook</div>
 
@@ -68,11 +65,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-          <div class="navbar-brand">Cari Semua Barang</div>
-          <form class="form-inline" action="cari.html" method="GET">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-light" style="margin-right: 50px;" type="submit">Search</button>
-              </form>
+        
               <div class="form-inline">
               <form method="post" action="{{action('DaftarController@validasi')}}">
 			{{csrf_field()}}
@@ -81,7 +74,7 @@
                 <button type="submit" class="btn btn-success mr-sm-2">Login</button>
                 </form>
                 
-              </div>
+              </div>  
           <a href="{{action('DaftarController@create')}}">
             <button class="btn btn-primary mr-sm-2" type="button">Daftar</button>
           </a>
@@ -91,28 +84,22 @@
     </nav>
     
     <div id="containerfluid" class="container-fluid">
-      <h1 class="mt-4" style="font-weight: bold;">Fakultas Arsitektur Desain dan Perencanaan</h1>
-      <h2 class="mt-4">Arsitektur</h2>
-      <p>Hot Items</p>
-      <div id="products" class="row view-group">
-        <div class="item col-xs-4 col-lg-4" style="flex:0 0 15%;">
-          <a href="barang.html" class="thumbnail card" style="padding-top: 15px;text-decoration: none;">
-          <div class="block">
-            <img src="https://www.static-src.com/wcsstore/Indraprastha/images/catalog/medium//99/MTA-2857671/dulux_dulux-catylac-eksterior-tinting-cat-tembok---super-white--20-l--_full02.jpg" width="100" height="100">
-          </div>
-          <div class="caption card-body" style="padding-left: 5px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;">
-          <h4 class="namabarang">
-          jual cat kualitas super mantap</h4>
-          <p class="harga" style="margin-bottom: 5px;">Rp 5.000.000</p>
-          <p style="color:black"> 
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star unchecked"></span>&nbsp;(10)
-          </p>
-        </div>
-      </a>
+      <h1 class="mt-4" style="font-weight: bold;"></h1>
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div><br />
+        @endif
+        @if (\Session::has('success'))
+        <div class="alert alert-success">
+          <p>{{ \Session::get('success') }}</p>
+        </div><br />
+        @endif
+
     </div>
    
     

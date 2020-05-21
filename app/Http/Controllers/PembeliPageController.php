@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Transaction_log;
+use App\PembeliPage;
 use Illuminate\Http\Request;
-
-class TransactionLogController extends Controller
+use Session;
+use App\Helper\Helper;
+use DB;
+use App\Detail_buku;
+use App\List_buku;
+use App\Keranjang_belanja;
+class PembeliPageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +19,9 @@ class TransactionLogController extends Controller
      */
     public function index()
     {
-        //
+        $user = Helper::auth(Session::get('email'),Session::get('password'));
+        
+        return view('pembeli.index',compact('user'));
     }
 
     /**
@@ -35,27 +42,27 @@ class TransactionLogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Transaction_log  $transaction_log
+     * @param  \App\PembeliPage  $pembeliPage
      * @return \Illuminate\Http\Response
      */
-    public function show(Transaction_log $transaction_log)
+    public function show($id)
     {
-        //
+       
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Transaction_log  $transaction_log
+     * @param  \App\PembeliPage  $pembeliPage
      * @return \Illuminate\Http\Response
      */
-    public function edit(Transaction_log $transaction_log)
+    public function edit(PembeliPage $pembeliPage)
     {
         //
     }
@@ -64,21 +71,21 @@ class TransactionLogController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Transaction_log  $transaction_log
+     * @param  \App\PembeliPage  $pembeliPage
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaction_log $transaction_log)
+    public function update(Request $request, $id)
     {
-        //
+     
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Transaction_log  $transaction_log
+     * @param  \App\PembeliPage  $pembeliPage
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Transaction_log $transaction_log)
+    public function destroy(PembeliPage $pembeliPage)
     {
         //
     }
