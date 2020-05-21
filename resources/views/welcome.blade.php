@@ -82,21 +82,6 @@
 
       <div id="containerfluid" class="container-fluid">
         <h1 class="mt-4" style="font-weight: bold;"></h1>
-        @if ($errors->any())
-        <div class="alert alert-danger">
-          <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-          </ul>
-        </div><br />
-        @endif
-        @if (\Session::has('success'))
-        <div class="alert alert-success">
-          <p>{{ \Session::get('success') }}</p>
-        </div><br />
-        @endif
-
           <h2 class="mt-4">Beli/sewa buku</h2>
           @if ($errors->any())
           <div class="alert alert-danger">
