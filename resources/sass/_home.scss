@@ -1,0 +1,113 @@
+.navbar {
+    position: fixed;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.85);
+    z-index: 99;
+
+    &.bg-light {
+        background-color: transparent !important;
+    }
+
+    &.navbar-expand-lg.show {
+        background: rgba(0, 0, 0, 0.85) !important;
+    }
+
+    .btn-outline-success {
+        color: rgba(255, 255, 255, 0.85);
+        border-color: rgba(255, 255, 255, 0.85);
+    }
+
+     .navbar-toggler {
+        color: rgba(255, 255, 255, 0.85);
+        border: 0;
+    }
+
+
+
+    .nav-link {
+        color: rgba(255, 255, 255, 0.85) !important;
+    }
+
+    .navbar-brand {
+        img {
+            width: 87px;
+            height: 46px;
+        }
+    }
+
+    .fa-search {
+        padding: 0px 10px;
+    }
+
+    .fa-user,
+    .fa-shopping-cart {
+        padding: 10px;
+        font-size: 20px;
+    }
+}
+
+.jumbotron {
+    padding: 0;
+    position: relative;
+    margin-bottom: 0;
+
+    .main-bg {
+        height: 100vh;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .main-quote {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        padding: 200px 0px;
+        color: #fff;
+        text-align: right;
+        display: flex;
+        flex-direction: column; 
+
+        .container {
+            margin: auto;
+
+            .display-4 {
+                font-size: 2rem;
+                padding-left: 0px;
+
+                @media (min-width: 768px) {
+                    padding-left: 120px;
+                    font-size: 3.5rem;
+                }
+            }
+        }
+    }
+}
+
+.popular {
+    color: #fff;
+    background-color: #ffc001;
+
+    &-content {
+        padding: 72px 0px;
+    }
+
+    &-title {
+        font-size: 42px;
+        font-weight: 600;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 0.85;
+        letter-spacing: normal;
+        text-align: left;
+        color: #ffffff;
+        text-transform: uppercase;
+        margin-bottom: 32px;
+    }
+
+    &-image {
+        img {
+            width: 100%;
+        }
+    }
+}

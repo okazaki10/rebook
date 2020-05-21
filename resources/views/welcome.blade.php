@@ -52,7 +52,9 @@
   <!-- Page Content -->
   <div id="page-content-wrapper" style="width: 100%;">
 
-    <nav class="navbar navbar-dark bg-dark navbar-expand-lg" style="position: fixed; width:100%;z-index: 10000;">
+    <nav class="navbar navbar-dark bg-dark navba
+    
+    r-expand-lg" style="position: fixed; width:100%;z-index: 10000;">
       <button class="btn btn-outline-light" id="menu-toggle">Menu</button>
          <div class="navbar-brand" style="background-image: url('kemas.png');background-size: 50px 50px;background-position: left;background-repeat: no-repeat; padding-left: 50px">Rebook</div>
 
