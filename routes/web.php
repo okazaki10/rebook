@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomePageController@index');
+Route::get('index.search', 'HomePageController@cari');
 Route::resource('daftar', 'DaftarController');
 
 Route::middleware('penjual')->group(function () {

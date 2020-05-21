@@ -6,6 +6,8 @@ use App\HomePage;
 use Illuminate\Http\Request;
 use Session;
 use App\Helper\Helper;
+use DB;
+
 class HomePageController extends Controller
 {
     /**
@@ -15,28 +17,21 @@ class HomePageController extends Controller
      */
     public function index()
     {
-        /*
-        if (Session::get('user') == '1'){
-            return redirect('pembeli/');
-        }else if(Session::get('user') == '2'){
-            return redirect('penjual/'); 
-        }else{
-            return view('welcome');
-        }
-        */
-        if (Session::has('email')){
-        $auth = Helper::auth(Session::get('email'),Session::get('password'));
-        if ($auth != null){
-            if ($auth->status == 1){
-                return redirect('pembeli/');
-                }else if($auth->status == 2 || $auth->status == 3){
-                return redirect('penjual/');
+        if (Session::has('email')) {
+            $auth = Helper::auth(Session::get('email'), Session::get('password'));
+            if ($auth != null) {
+                if ($auth->status == 1) {
+                    return redirect('pembeli/');
+                } else if ($auth->status == 2 || $auth->status == 3) {
+                    return redirect('penjual/');
                 }
-            }else{
-            return view('welcome');
-        }
-        }else{
-            return view('welcome');
+            } else {
+                Session::destroy();
+                return redirect('/');
+            }
+        } else {
+            $list_bukus = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'detail_buku.harga', 'detail_buku.kategori', 'detail_buku.bisa_disewa', 'detail_buku.penulis', 'detail_buku.deskripsi', 'detail_buku.tanggal_terbit')->paginate(5);
+            return view('welcome', compact('list_bukus'));
         }
     }
 
@@ -45,7 +40,34 @@ class HomePageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-  
+    public function cari(Request $request)
+    {
+        if ($request->type != null) {
+            Session::put('type', $request->type);
+            Session::put('sewa', $request->sewa);
+        }
+        $detail_buku = '';
+        if (Session::get('type') == "judul") {
+            $detail_buku = 'detail_buku.judul';
+        } else if (Session::get('type') == "kategori") {
+            $detail_buku = 'detail_buku.kategori';
+        } else if (Session::get('type') == "penulis") {
+            $detail_buku = 'detail_buku.penulis';
+        }
+        if (Session::get('sewa') == "1") {
+            $list_bukus = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'detail_buku.harga', 'detail_buku.kategori', 'detail_buku.bisa_disewa','detail_buku.penulis','detail_buku.deskripsi','detail_buku.tanggal_terbit')
+                ->where($detail_buku, 'like', '%' . $request->pencarian . '%')
+                ->where('detail_buku.bisa_disewa','1')
+                ->paginate(5);
+        } else {
+            $list_bukus = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'detail_buku.harga', 'detail_buku.kategori', 'detail_buku.bisa_disewa','detail_buku.penulis','detail_buku.deskripsi','detail_buku.tanggal_terbit')
+                ->where($detail_buku, 'like', '%' . $request->pencarian . '%')
+                ->paginate(5);
+        }
+        return view('welcome', compact('list_bukus'));
+    }
+
+    
     public function create()
     {
         //

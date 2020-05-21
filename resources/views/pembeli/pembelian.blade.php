@@ -107,20 +107,20 @@
         @endif
         <form method="GET" action="pembelian.cari">
           <div class="row">
-          <div class="col-md-3">
-          <select name="type" class="form-control">
-            <option value="judul">Judul</option>
-            <option value="kategori">Kategori</option>
-            <option value="penulis">Penulis</option>
-          </select>
-          </div>
-          <div class="col-md-3">
-          <input type="text" class="form-control" name="pencarian">
-          </div>
-          <div class="col-md-6">
-          <button type="submit" name="sewa" value="0" class="btn btn-success mr-sm-2">Cari</button>
-          <button type="submit" name="sewa" value="1" class="btn btn-primary mr-sm-2">Cari yang bisa disewa</button>
-          </div>
+            <div class="col-md-3">
+              <select name="type" class="form-control">
+                <option value="judul">Judul</option>
+                <option value="kategori">Kategori</option>
+                <option value="penulis">Penulis</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control" name="pencarian">
+            </div>
+            <div class="col-md-6">
+              <button type="submit" name="sewa" value="0" class="btn btn-success mr-sm-2">Cari</button>
+              <button type="submit" name="sewa" value="1" class="btn btn-primary mr-sm-2">Cari yang bisa disewa</button>
+            </div>
           </div>
         </form>
         @foreach($list_bukus as $list_buku)
@@ -143,7 +143,7 @@
                     <h5>{{$list_buku->penulis}}</h5>
 
 
-                    <h6>Bisa disewa? : {{$list_buku->bisa_disewa == '1'?'ya':'tidak'}}</h6>
+                    <h6>Bisa disewa? : {{$list_buku->bisa_disewa == '1'?'Ya':'Tidak'}}</h6>
                     <h6>Kategori : {{$list_buku->kategori}}</h6>
                     <h6 style="font-weight: bold;">Tanggal Terbit : {{$list_buku->tanggal_terbit}}</h6>
                     <h6>Stok : {{$list_buku->stok}}</h6>
