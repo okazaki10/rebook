@@ -8,6 +8,7 @@ use DB;
 use Illuminate\Http\Request;
 use Session;
 use App\Helper\Helper;
+
 class ListBukuController extends Controller
 {
     /**
@@ -17,10 +18,10 @@ class ListBukuController extends Controller
      */
     public function index()
     {
-        $user = Helper::auth(Session::get('email'),Session::get('password'));
-        $data = DB::table('list_buku')->join('detail_buku','list_buku.id_buku','=','detail_buku.id')->select('list_buku.id','list_buku.id_penjual','detail_buku.judul','list_buku.stok','detail_buku.gambar','detail_buku.kategori','detail_buku.bisa_disewa')->where('detail_buku.id_penjual',$user->id)->get();  
+        $user = Helper::auth(Session::get('email'), Session::get('password'));
+        $data = DB::table('list_buku')->join('detail_buku', 'list_buku.id_buku', '=', 'detail_buku.id')->select('list_buku.id', 'list_buku.id_penjual', 'detail_buku.judul', 'list_buku.stok', 'detail_buku.gambar', 'detail_buku.kategori', 'detail_buku.bisa_disewa')->where('detail_buku.id_penjual', $user->id)->get();
         $list_bukus = json_decode($data, true);
-        return view('penjual.lihatbuku',compact('list_bukus','user'));
+        return view('penjual.lihatbuku', compact('list_bukus', 'user'));
     }
 
     /**
@@ -30,10 +31,9 @@ class ListBukuController extends Controller
      */
     public function create()
     {
-        $user = Helper::auth(Session::get('email'),Session::get('password'));
-        $detail_bukus = Detail_buku::where('id_penjual',$user->id)->get();
-        return view('penjual.listbuku',compact('detail_bukus','user'));
-            
+        $user = Helper::auth(Session::get('email'), Session::get('password'));
+        $detail_bukus = Detail_buku::where('id_penjual', $user->id)->get();
+        return view('penjual.listbuku', compact('detail_bukus', 'user'));
     }
 
     /**
@@ -47,14 +47,18 @@ class ListBukuController extends Controller
         $this->validate(request(), [
             'id_buku' => 'required',
             'stok' => 'required|numeric'
-            ]);
-        $list_buku = new List_buku;
-        $user = Helper::auth(Session::get('email'),Session::get('password'));
-        $list_buku->id_penjual = $user->id;
-        $list_buku->id_buku = $request->get('id_buku');
-        $list_buku->stok = $request->get('stok');
-        $list_buku->save();
-        return redirect('penjual/')->with('success','Data has been updated');
+        ]);
+        if ($request->get('stok') > 0) {
+            $list_buku = new List_buku;
+            $user = Helper::auth(Session::get('email'), Session::get('password'));
+            $list_buku->id_penjual = $user->id;
+            $list_buku->id_buku = $request->get('id_buku');
+            $list_buku->stok = $request->get('stok');
+            $list_buku->save();
+            return redirect('penjual/')->with('success', 'Data has been updated');
+        } else {
+            return redirect('penjual/penjualan')->with('success', 'Jumlah stok tidak boleh 0 atau negatif');
+        }
     }
 
     /**
@@ -64,9 +68,7 @@ class ListBukuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(List_buku $list_buku)
-    {
-        
-    }
+    { }
 
     /**
      * Show the form for editing the specified resource.
@@ -75,9 +77,7 @@ class ListBukuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-
-    }
+    { }
 
     /**
      * Update the specified resource in storage.
@@ -91,13 +91,17 @@ class ListBukuController extends Controller
         $list_buku = List_buku::find($id);
         $this->validate(request(), [
             'stok' => 'required|numeric'
-            ]);
-        $list_buku->stok = $request->get('stok');
-        $list_buku->save();
-        return redirect('penjual/listbuku')->with('success','Data has been updated');
+        ]);
+        if ($request->get('stok') > 0) {
+            $list_buku->stok = $request->get('stok');
+            $list_buku->save();
+            return redirect('penjual/listbuku')->with('success', 'Data has been updated');
+        } else {
+            return redirect('penjual/listbuku')->with('success', 'Jumlah stok tidak boleh 0 atau negatif');
+        }
     }
 
-  
+
 
     /**
      * Remove the specified resource from storage.
@@ -107,8 +111,8 @@ class ListBukuController extends Controller
      */
     public function destroy($id)
     {
-    $list_buku = List_buku::find($id);
-    $list_buku->delete();
-    return redirect('penjual/listbuku')->with('success','Data has been updated');
+        $list_buku = List_buku::find($id);
+        $list_buku->delete();
+        return redirect('penjual/listbuku')->with('success', 'Data has been updated');
     }
 }
