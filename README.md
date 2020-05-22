@@ -1,3 +1,9 @@
+#sql
+Di folder rebook juga ada rebook.sql
+
+Tinggal di import dengan database rebook
+
+
 # rebook
 install xampp kalau belum install
 
