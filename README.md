@@ -1,7 +1,13 @@
 # rebook
+install xampp kalau belum install
+pertama download terus install composer
+
+
 habis download
 
-ketik di terminal:
+
+ketik di terminal projectnya:
+
 
 composer install
 
