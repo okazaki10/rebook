@@ -13,7 +13,7 @@ pertama download terus install composer
 habis download
 
 
-## ketik di terminal projectnya:
+## ketik di terminal projectnya :
 
 
 ### composer install
