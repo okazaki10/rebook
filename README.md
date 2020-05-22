@@ -1,4 +1,4 @@
-#sql
+# sql
 Di folder rebook juga ada rebook.sql
 
 Tinggal di import dengan database rebook
@@ -13,11 +13,11 @@ pertama download terus install composer
 habis download
 
 
-ketik di terminal projectnya:
+## ketik di terminal projectnya:
 
 
-composer install
+### composer install
 
-php artisan key:generate
+###p hp artisan key:generate
 
-php artisan storage:link
+### php artisan storage:link
