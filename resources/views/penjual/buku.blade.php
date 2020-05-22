@@ -114,8 +114,7 @@
           </div>
           <div class="form-group">
             <label>Deskripsi</label>
-            <textarea type="text" name="deskripsi" class="form-control">
-            </textarea>
+            <textarea type="text" name="deskripsi" class="form-control"></textarea>
           </div>
           <div class="form-group">
             <label>Kategori</label>
