@@ -18,6 +18,6 @@ habis download
 
 ### composer install
 
-###p hp artisan key:generate
+### php artisan key:generate
 
 ### php artisan storage:link
