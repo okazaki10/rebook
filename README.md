@@ -12,6 +12,8 @@ pertama download terus install composer
 
 habis download
 
+# SESUAIKAN .env DENGAN DATABASE, USERNAME, PASSWORD, HOST, URLNYA
+
 
 ## ketik di terminal projectnya :
 
