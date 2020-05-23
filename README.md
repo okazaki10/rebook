@@ -12,7 +12,7 @@ pertama download terus install composer
 
 habis download
 
-# SESUAIKAN .env DENGAN DATABASE, USERNAME, PASSWORD, HOST, URLNYA
+# COPY .env-example KE FOLDER REBOOK DAN UBAH NAMA .env-example MENJADI .env DAN SESUAIKAN DENGAN DATABASE, USERNAME, PASSWORD
 
 
 ## ketik di terminal projectnya :
